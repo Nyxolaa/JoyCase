@@ -1,7 +1,9 @@
 ﻿
+using Microsoft.EntityFrameworkCore;
+
 namespace JoyCase.Data
 {
-    public class JoyContext
+    public class JoyContext : DbContext
     {
     }
 }

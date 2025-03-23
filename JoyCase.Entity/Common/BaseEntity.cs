@@ -6,7 +6,6 @@ namespace JoyCase.Entity.Common
     public class BaseEntity
     {
         [Key]
-        //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long Id { get; set; }
         public Guid Unique { get; set; }
         public DateTime CreatedAt { get; set; }
