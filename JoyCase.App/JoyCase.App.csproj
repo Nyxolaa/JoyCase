@@ -19,4 +19,9 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\JoyCase.Data\JoyCase.Data.csproj" />
+    <ProjectReference Include="..\JoyCase.Entity\JoyCase.Entity.csproj" />
+  </ItemGroup>
+
 </Project>
