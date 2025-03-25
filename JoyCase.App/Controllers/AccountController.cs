@@ -1,21 +1,21 @@
-﻿using Microsoft.AspNetCore.Authentication;
+﻿using JoyCase.Application.User.Query.LoginUserQuery;
+using MediatR;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
 using System.Security.Claims;
-using System.Threading.Tasks;
 
 public class AccountController : Controller
 {
     private readonly IHttpContextAccessor _httpContextAccessor;
-
-    public AccountController(IHttpContextAccessor httpContextAccessor)
+    private readonly IMediator _mediator;
+    public AccountController(IHttpContextAccessor httpContextAccessor, IMediator mediator)
     {
         _httpContextAccessor = httpContextAccessor;
+        _mediator = mediator;
     }
 
-    [HttpGet] // 🔹 Login sayfasını açmak için
+    [HttpGet]
     public IActionResult Login()
     {
         return View();
@@ -24,6 +24,8 @@ public class AccountController : Controller
     [HttpPost]
     public async Task<IActionResult> Login(string email, string password)
     {
+        var response = _mediator.Send(new LoginUserQuery(email, password));
+
         // kullanici dogrulama
         if (email == "test@example.com" && password == "password")
         {
@@ -44,7 +46,7 @@ public class AccountController : Controller
             {
                 Expires = DateTime.UtcNow.AddMonths(1), // 1 ay boyunca sakla
                 HttpOnly = false, // tarayicidan erisim
-                Secure = true, // HTTPS 
+                Secure = true, // HTTPS
                 IsEssential = true // yasal veri korumasi icin
             });
 

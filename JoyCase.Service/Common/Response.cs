@@ -1,4 +1,4 @@
-﻿namespace JoyCase.Service
+﻿namespace JoyCase.Application
 {
     public class Response<T>
     {

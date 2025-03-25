@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 
-namespace JoyCase.Data.Data;
+namespace JoyCase.Data;
 
-public partial class JoyDbContext : DbContext
+public partial class JoyDbContext : DbContext, IJoyDbContext
 {
     public JoyDbContext()
     {
@@ -154,6 +152,5 @@ public partial class JoyDbContext : DbContext
 
         OnModelCreatingPartial(modelBuilder);
     }
-
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
 }

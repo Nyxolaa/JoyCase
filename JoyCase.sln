@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JoyCase.Api", "JoyCase.Api\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JoyCase.Data", "JoyCase.Data\JoyCase.Data.csproj", "{0608A86A-B008-45EB-8CEE-E73CE78E17EC}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JoyCase.Service", "JoyCase.Service\JoyCase.Service.csproj", "{D24648A0-7612-4B7B-88B2-9425B8DED247}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JoyCase.Application", "JoyCase.Service\JoyCase.Application.csproj", "{D24648A0-7612-4B7B-88B2-9425B8DED247}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

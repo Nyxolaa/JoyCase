@@ -7,6 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="MediatR" Version="11.0.0" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Cookies" Version="2.3.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.3" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.3">
@@ -27,6 +29,7 @@
   <ItemGroup>
     <ProjectReference Include="..\JoyCase.Data\JoyCase.Data.csproj" />
     <ProjectReference Include="..\JoyCase.Entity\JoyCase.Entity.csproj" />
+    <ProjectReference Include="..\JoyCase.Service\JoyCase.Application.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace JoyCase.Data.Data;
+﻿namespace JoyCase.Data;
 
 public partial class Role
 {
