@@ -24,7 +24,6 @@ public class AuthController : ControllerBase
     public async Task<IActionResult> Login([FromBody] LoginUserQuery request)
     {
         var response = await _mediator.Send(request);
-        // kullanici dogrulama (bu kısmı DB ile bağlayabilirsin)
         if (response == null)
             return Unauthorized("Geçersiz kullanıcı adı veya şifre");
 
