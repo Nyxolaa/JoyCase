@@ -34,9 +34,9 @@ namespace JoyCase.Application.User.Query.LoginUserQuery
                         Roles = u.Roles.Select(r => new
                         {
                             r.Id,
-                            Permissions = r.Permissions.Select(p => new { p.Id })
+                            Permissions = r.Permissions.Select(p => new { p.Id, p.Name })
                         }).ToList(),
-                        UserPermissions = u.Permissions.Select(p => new { p.Id }).ToList()
+                        UserPermissions = u.Permissions.Select(p => new { p.Id, p.Name }).ToList()
                     }
                  );
 
@@ -47,16 +47,16 @@ namespace JoyCase.Application.User.Query.LoginUserQuery
 
                 // kullanicinin sahip oldugu rollerden gelen tum izinler
                 var rolePermissions = user.Roles
-                    .SelectMany(r => r.Permissions, (r, p) => new RolePermissionDto { RoleId = r.Id, PermissionId = p.Id })
+                    .SelectMany(r => r.Permissions, (r, p) => new RolePermissionDto { RoleId = r.Id, PermissionId = p.Id, Name = p.Name })
                     .Distinct()
                     .ToList();
 
                 // kullanicinin yetkikleri
                 var userPermissions = user.UserPermissions
-                    .Select(p => new UserPermissionDto { UserId = user.Id, PermissionId = p.Id })
+                    .Select(p => new UserPermissionDto { UserId = user.Id, PermissionId = p.Id, Name = p.Name })
                     .ToList();
 
-                // kullanici icin DTO olustur
+                // geri donus icin kullanici dto 
                 var response = new LoginUserDto
                 {
                     UserId = user.Id,

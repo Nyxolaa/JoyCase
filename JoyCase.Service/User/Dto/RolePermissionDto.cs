@@ -4,5 +4,6 @@
     {
         public long RoleId { get; set; }
         public long PermissionId { get; set; }
+        public string Name { get; set; }
     }
 }
