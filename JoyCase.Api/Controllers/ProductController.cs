@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using JoyCase.Api.Infrastructure;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 [Route("api/products")]
@@ -6,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 public class ProductController : ControllerBase
 {
     [HttpGet]
-    [Authorize]  // JWT gerektiriyor!
+    [Authorize(Roles = "1, 2")]
     public IActionResult GetProducts()
     {
         var products = new[]
@@ -19,7 +20,7 @@ public class ProductController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    [Authorize(Roles = "Admin")]  // Sadece Admin rolü erişebilir
+    [Permission("product_view")] // urun sayfasina yalnizca product_view yetkisi olanlar erisir
     public IActionResult GetProduct(int id)
     {
         return Ok(new { Id = id, Name = "Özel Ürün", Price = 999 });
