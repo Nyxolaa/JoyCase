@@ -24,8 +24,6 @@ public class AccountController : Controller
     [HttpPost]
     public async Task<IActionResult> Login(string email, string password)
     {
-        var response = _mediator.Send(new LoginUserQuery(email, password));
-
         // kullanici dogrulama
         if (email == "test@example.com" && password == "password")
         {

@@ -1,5 +1,5 @@
-﻿using JoyCase.Application.User.Query.LoginUserQuery;
-using JoyCase.Data;
+﻿using JoyCase.Api.Log;
+using JoyCase.Application.User.Query.LoginUserQuery;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -13,11 +13,13 @@ public class AuthController : ControllerBase
 {
     private readonly IConfiguration _configuration;
     private readonly IMediator _mediator;
+    private readonly LogService _logService;
 
     public AuthController(IConfiguration configuration, IMediator mediator)
     {
         _configuration = configuration;
         _mediator = mediator;
+        _logService = new LogService();
     }
 
     [HttpPost("login")]
@@ -70,5 +72,15 @@ public class AuthController : ControllerBase
         {
             return NotFound(response.Errors);
         }
+    }
+
+    [HttpGet("log-test")]
+    public IActionResult LogTest()
+    {
+        _logService.LogInfo("Bu bir bilgi mesajıdır.");
+        _logService.LogWarning("Bu bir uyarı mesajıdır.");
+        _logService.LogError("Bu bir hata mesajıdır.", new Exception("Örnek hata"));
+
+        return Ok("Log test işlemi tamamlandı.");
     }
 }

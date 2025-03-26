@@ -9,6 +9,9 @@
   <ItemGroup>
     <Folder Include="Category\Command\" />
     <Folder Include="Product\Command\CreateProductCommand\" />
+    <Folder Include="Product\Command\DeleteProductCommand\" />
+    <Folder Include="Product\Command\UpdateProductCommand\" />
+    <Folder Include="Product\Query\GetProductQuery\" />
     <Folder Include="Services\" />
     <Folder Include="User\Command\" />
   </ItemGroup>

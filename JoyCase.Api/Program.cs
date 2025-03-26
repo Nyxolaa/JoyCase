@@ -6,6 +6,9 @@ using JoyCase.Data.Repository;
 using JoyCase.Validation;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using Serilog.Sinks.MSSqlServer;
+using Serilog;
+using System.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +18,31 @@ builder.Services.AddAuthorization();
 
 builder.Services.AddDbContext<JoyDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+// serilog konfigu
+var logDB = builder.Configuration.GetConnectionString("LogDb");
+Log.Logger = new LoggerConfiguration()
+    .MinimumLevel.Information()
+    .WriteTo.Console() // Konsola loglama
+    .WriteTo.File("logs/log-.txt", rollingInterval: RollingInterval.Day) // Günlük log dosyası
+    .WriteTo.MSSqlServer(
+        connectionString: logDB,
+        sinkOptions: new MSSqlServerSinkOptions { TableName = "Logs", AutoCreateSqlTable = false }
+        //,
+        //columnOptions: new ColumnOptions
+        //{
+        //    AdditionalColumns = new List<SqlColumn>
+        //    {
+        //        new SqlColumn("LogLevel", SqlDbType.NVarChar),
+        //        new SqlColumn("Message", SqlDbType.NVarChar),
+        //        new SqlColumn("Exception", SqlDbType.NVarChar),
+        //        new SqlColumn("Timestamp", SqlDbType.DateTime2)
+        //    }
+        //}
+    )
+    .CreateLogger();
+
+builder.Host.UseSerilog();
 
 builder.Services.AddControllers();
 
@@ -28,7 +56,7 @@ builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
 
-    // Swagger için JWT Authorization ayarları
+    // swagger icin jwt authorization ayarlari
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
         Description = "JWT Authorization header using the Bearer scheme. Example: \"Bearer {token}\"",
@@ -61,7 +89,7 @@ builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Assem
 
 
 var app = builder.Build();
-
+app.UseSerilogRequestLogging();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -71,8 +99,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseAuthentication(); // JWT Authentication
-app.UseAuthorization(); // Yetkilendirme
+app.UseAuthentication(); // jwt authentication
+app.UseAuthorization(); // yetkilendirme
 
 app.MapControllers();
 
