@@ -16,7 +16,7 @@ namespace JoyCase.Application.Product.Query.GetProductsByCategoryQuery
 
         public async Task<IEnumerable<ProductDto>> Handle(GetProductsByCategoryQuery request, CancellationToken cancellationToken)
         {
-            var products = await _productRepository.ExecuteStoredProcedureAsync<ProductDto>("GetProductsByCategory");
+            var products = await _productRepository.ExecuteStoredProcedureAsync<ProductDto>("dbo.GetProductsByCategory");
 
             return products;
         }
