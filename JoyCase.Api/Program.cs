@@ -64,7 +64,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseAuthentication(); // JWT Authentication kullan
+app.UseAuthentication(); // JWT Authentication
 app.UseAuthorization(); // Yetkilendirme
 
 app.MapControllers();

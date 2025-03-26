@@ -9,11 +9,9 @@
   <ItemGroup>
     <Folder Include="Category\Command\" />
     <Folder Include="Category\Dto\" />
-    <Folder Include="Category\Query\" />
+    <Folder Include="Category\Query\GetRecursiveCategoriesQuery\" />
     <Folder Include="Product\Command\CreateProductCommand\" />
     <Folder Include="Services\" />
-    <Folder Include="Product\Dto\" />
-    <Folder Include="Product\Query\" />
     <Folder Include="User\Command\" />
   </ItemGroup>
 

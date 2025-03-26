@@ -1,4 +1,6 @@
 ﻿using JoyCase.Api.Infrastructure;
+using JoyCase.Application.Product.Query.GetProductsByCategoryQuery;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -6,10 +8,18 @@ using Microsoft.AspNetCore.Mvc;
 [ApiController]
 public class ProductController : ControllerBase
 {
+    private readonly IMediator _mediator;
+    public ProductController(IMediator mediator)
+    {
+        _mediator = mediator;
+    }
+
     [HttpGet]
     [Authorize(Roles = "1, 2")]
-    public IActionResult GetProducts()
+    public async Task<ActionResult> GetProducts()
     {
+        var response = await _mediator.Send(new GetProductsByCategoryQuery());
+
         var products = new[]
         {
             new { Id = 1, Name = "Ürün 1", Price = 100 },

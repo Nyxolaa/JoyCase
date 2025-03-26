@@ -13,5 +13,7 @@ namespace JoyCase.Data.Repository
         Task UpdateAsync(T entity);
         Task DeleteAsync(int id);
         Task<int> SaveChangesAsync();
+
+        Task<List<T>> ExecuteStoredProcedureAsync<T>(string storedProcedure) where T : class;
     }
 }
