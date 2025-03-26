@@ -28,6 +28,7 @@
 	<ItemGroup>
 		<ProjectReference Include="..\JoyCase.Data\JoyCase.Data.csproj" />
 		<ProjectReference Include="..\JoyCase.Service\JoyCase.Application.csproj" />
+		<ProjectReference Include="..\JoyCase.Validation\JoyCase.Validation.csproj" />
 	</ItemGroup>
 
 </Project>

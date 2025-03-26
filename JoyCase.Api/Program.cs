@@ -1,6 +1,9 @@
-﻿using JoyCase.Application.Common;
+﻿using FluentValidation;
+using JoyCase.Application.Common;
+using JoyCase.Application.User.Validator;
 using JoyCase.Data;
 using JoyCase.Data.Repository;
+using JoyCase.Validation;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 
@@ -16,6 +19,10 @@ builder.Services.AddDbContext<JoyDbContext>(options =>
 builder.Services.AddControllers();
 
 builder.Services.AddEndpointsApiExplorer();
+
+// fluent validation 
+builder.Services.AddScoped<IValidationService, ValidationService>();
+builder.Services.AddValidatorsFromAssemblyContaining<LoginUserValidator>();
 
 builder.Services.AddSwaggerGen(c =>
 {

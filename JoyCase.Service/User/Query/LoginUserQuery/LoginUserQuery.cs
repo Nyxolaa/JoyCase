@@ -1,6 +1,8 @@
-﻿using JoyCase.Application.User.Dto;
+﻿using Azure.Core;
+using JoyCase.Application.User.Dto;
 using JoyCase.Data;
 using JoyCase.Data.Repository;
+using JoyCase.Validation;
 using MediatR;
 
 namespace JoyCase.Application.User.Query.LoginUserQuery
@@ -13,16 +15,23 @@ namespace JoyCase.Application.User.Query.LoginUserQuery
         {
             private readonly IRepository<Data.User> _userRepository;
             private readonly IRepository<Role> _roleRepository;
-
-            public LoginUserHandler(IRepository<Data.User> userRepository, IRepository<Role> roleRepository
-                )
+            private readonly IValidationService _validationService;
+            public LoginUserHandler(IRepository<Data.User> userRepository, IRepository<Role> roleRepository, IValidationService validationService)
             {
                 _userRepository = userRepository;
                 _roleRepository = roleRepository;
+                _validationService = validationService;
             }
 
             public async Task<Response<LoginUserDto>> Handle(LoginUserQuery request, CancellationToken cancellationToken)
             {
+                var validation = _validationService.Validate(request);
+                if (!validation.IsValid)
+                {
+                    var array = new string[] { "Validasyon Hatasi", string.Join(", ", validation.ValidationResult) };
+                    return Response<LoginUserDto>.Failure( array );
+                }
+
                 var user = await _userRepository.SelectOneAsync(
                     u => u.Username == request.Username,
                     u => new
