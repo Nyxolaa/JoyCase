@@ -28,7 +28,6 @@ namespace JoyCase.Data.Repository
                               .ToListAsync();
         }
 
-
         public async Task<IEnumerable<T>> GetAllAsync()
         {
             return await _dbSet.ToListAsync();
@@ -62,55 +61,6 @@ namespace JoyCase.Data.Repository
         {
             return await _context.SaveChangesAsync();
         }
-
-
-        //public async Task<IEnumerable<TResult>> ExecuteStoredProcedureAsync<TResult>(string storedProcedure, params object[] parameters) where TResult : class
-        //{
-        //    return await _context.Database.SqlQueryRaw<TResult>(storedProcedure, parameters).ToListAsync();
-        //}
-
-        //public async Task<IEnumerable<TResult>> ExecuteStoredProcedureAsync<TResult>(string storedProcedure, params object[] parameters) where TResult : class
-        //{
-        //    var results = new List<TResult>();
-
-        //    await using var command = _context.Database.GetDbConnection().CreateCommand();
-        //    command.CommandText = storedProcedure;
-        //    command.CommandType = System.Data.CommandType.StoredProcedure;
-
-        //    if (parameters != null)
-        //    {
-        //        foreach (var param in parameters)
-        //        {
-        //            var dbParam = command.CreateParameter();
-        //            dbParam.Value = param;
-        //            command.Parameters.Add(dbParam);
-        //        }
-        //    }
-
-        //    await _context.Database.OpenConnectionAsync();
-        //    await using var reader = await command.ExecuteReaderAsync();
-
-        //    var resultType = typeof(TResult);
-        //    var properties = resultType.GetProperties();
-
-        //    while (await reader.ReadAsync())
-        //    {
-        //        var obj = Activator.CreateInstance<TResult>();
-
-        //        foreach (var prop in properties)
-        //        {
-        //            if (!reader.IsDBNull(reader.GetOrdinal(prop.Name)))
-        //            {
-        //                prop.SetValue(obj, reader.GetValue(reader.GetOrdinal(prop.Name)));
-        //            }
-        //        }
-
-        //        results.Add(obj);
-        //    }
-
-        //    await _context.Database.CloseConnectionAsync();
-        //    return results;
-        //}
 
         public async Task<List<T>> ExecuteStoredProcedureAsync<T>(string storedProcedure) where T : class
         {
