@@ -30,4 +30,8 @@
     <ProjectReference Include="..\JoyCase.Service\JoyCase.Application.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Models\ProductModel\" />
+  </ItemGroup>
+
 </Project>

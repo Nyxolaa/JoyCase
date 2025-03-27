@@ -5,7 +5,6 @@ using JoyCase.Application.Product.Command.UpdateProductCommand;
 using JoyCase.Application.Product.Query.GetProductByIdQuery;
 using JoyCase.Application.Product.Query.GetProductsByCategoryQuery;
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 [Route("api/products")]
@@ -18,24 +17,18 @@ public class ProductController : ControllerBase
         _mediator = mediator;
     }
 
-    [HttpGet]
-    [Authorize(Roles = "1, 2")]
-    public async Task<ActionResult> GetProducts(GetProductsByCategoryQuery request)
+    [HttpGet("get-products-by-category")]
+    //[Authorize(Roles = "1, 2")]
+    public async Task<ActionResult> GetProductsByCategory([FromQuery]GetProductsByCategoryQuery request)
     {
         var response = await _mediator.Send(request);
         return Ok(response);
     }
 
-    [HttpGet("{id}")]
-    [Permission("product_view")] // urun sayfasina yalnizca product_view yetkisi olanlar erisir
-    public IActionResult GetProduct(int id)
-    {
-        return Ok(new { Id = id, Name = "Özel Ürün", Price = 999 });
-    }
-
     // id'ye gore urun getir
-    [HttpGet("{id}")]
-    public async Task<IActionResult> GetProductById(GetProductByIdQuery request)
+    [HttpGet("get-product-by-id")]
+    //[Permission("product_view")] // urun sayfasina yalnizca product_view yetkisi olanlar erisir
+    public async Task<IActionResult> GetProductById([FromQuery]GetProductByIdQuery request)
     {
         var product = await _mediator.Send(request);
         if (product == null) return NotFound();
@@ -43,26 +36,26 @@ public class ProductController : ControllerBase
     }
 
     // yeni urun ekle
-    [HttpPost]
-    public async Task<IActionResult> CreateProduct(CreateProductCommand command)
+    [HttpPost("create-product")]
+    public async Task<IActionResult> CreateProduct([FromBody]CreateProductCommand command)
     {
         var productId = await _mediator.Send(command);
         return CreatedAtAction(nameof(GetProductById), new { id = productId }, productId);
     }
 
     // guncelle
-    [HttpPut]
-    public async Task<IActionResult> UpdateProduct(UpdateProductCommand command)
+    [HttpPut("update-product")]
+    public async Task<IActionResult> UpdateProduct([FromBody]UpdateProductCommand command)
     {
         var result = await _mediator.Send(command);
         return result ? Ok() : NotFound();
     }
 
     // sil
-    [HttpDelete("{id}")]
-    public async Task<IActionResult> DeleteProduct(long id)
+    [HttpDelete("delete-product")]
+    public async Task<IActionResult> DeleteProduct([FromQuery]DeleteProductCommand request)
     {
-        var result = await _mediator.Send(new DeleteProductCommand { Id = id });
+        var result = await _mediator.Send(request);
         return result ? Ok() : NotFound();
     }
 }

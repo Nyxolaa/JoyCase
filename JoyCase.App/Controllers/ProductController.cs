@@ -5,12 +5,12 @@ using System.Diagnostics;
 
 namespace JoyCase.App.Controllers
 {
-    public class HomeController : Controller
+    public class ProductController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly ILogger<ProductController> _logger;
         private readonly ApiService _apiService;
 
-        public HomeController(ILogger<HomeController> logger, ApiService apiService)
+        public ProductController(ILogger<ProductController> logger, ApiService apiService)
         {
             _logger = logger;
             _apiService = apiService;
@@ -18,15 +18,8 @@ namespace JoyCase.App.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var categories = await _apiService.GetAllCategories();
-            ViewBag.Categories = categories;
             var products = await _apiService.GetProductsByCategory();
             ViewBag.Products = products;
-            return View();
-        }
-
-        public IActionResult Privacy()
-        {
             return View();
         }
 

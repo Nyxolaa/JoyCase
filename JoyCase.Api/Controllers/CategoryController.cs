@@ -1,4 +1,5 @@
-﻿using JoyCase.Application.Category.Command.DeleteCategoryCommand;
+﻿using JoyCase.Application.Category.Command.CreateCategoryCommand;
+using JoyCase.Application.Category.Command.DeleteCategoryCommand;
 using JoyCase.Application.Category.Command.UpdateCategoryCommand;
 using JoyCase.Application.Category.Query.GetCategoryListQuery;
 using JoyCase.Application.Category.Query.GetRecursiveCategoriesQuery;
@@ -16,39 +17,39 @@ public class CategoryController : ControllerBase
         _mediator = mediator;
     }
 
-    [HttpGet]
-    [Authorize(Roles = "1, 2")]
-    public async Task<ActionResult> GetCategories()
+    [HttpGet("get-recursive-categories")]
+    //[Authorize(Roles = "1, 2")]
+    public async Task<ActionResult> GetCategories([FromQuery]GetRecursiveCategoriesQuery request)
     {
-        var response = await _mediator.Send(new GetRecursiveCategoriesQuery());
-
-        var categories = new[]
-        {
-            new { Id = 1, Name = "cat 1" },
-            new { Id = 2, Name = "cat 2" }
-        };
-
-        return Ok(categories);
+        var response = await _mediator.Send(request);
+        return Ok(response);
     }
 
-    [HttpPut]
-    public async Task<IActionResult> UpdateCategory(UpdateCategoryCommand command)
+    [HttpPost("create-category")]
+    public async Task<IActionResult> CreateCategory([FromBody]CreateCategoryCommand command)
+    {
+        var result = await _mediator.Send(command);
+        return result > 0 ? Ok() : NotFound();
+    }
+
+    [HttpPut("update-category")]
+    public async Task<IActionResult> UpdateCategory([FromBody]UpdateCategoryCommand command)
     {
         var result = await _mediator.Send(command);
         return result ? Ok() : NotFound();
     }
 
-    [HttpDelete("{id}")]
-    public async Task<IActionResult> DeleteCategory(long id)
+    [HttpDelete("delete-category")]
+    public async Task<IActionResult> DeleteCategory([FromQuery]DeleteCategoryCommand request)
     {
-        var result = await _mediator.Send(new DeleteCategoryCommand { Id = id });
+        var result = await _mediator.Send(request);
         return result ? Ok() : NotFound();
     }
 
-    [HttpGet]
-    public async Task<IActionResult> GetAllCategories()
+    [HttpGet("list-category")]
+    public async Task<IActionResult> GetAllCategories([FromQuery]GetCategoryListQuery request)
     {
-        var categories = await _mediator.Send(new GetCategoryListQuery());
+        var categories = await _mediator.Send(request);
         return Ok(categories);
     }
 }

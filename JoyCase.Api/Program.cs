@@ -19,6 +19,8 @@ builder.Services.AddAuthorization();
 builder.Services.AddDbContext<JoyDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+builder.Services.AddHttpClient();
+
 // serilog konfigu
 var logDB = builder.Configuration.GetConnectionString("LogDb");
 Log.Logger = new LoggerConfiguration()
