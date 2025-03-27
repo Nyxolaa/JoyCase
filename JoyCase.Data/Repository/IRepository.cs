@@ -8,10 +8,10 @@ namespace JoyCase.Data.Repository
         Task<List<TResult>> SelectAsync<TResult>(Expression<Func<T, bool>> filter, Expression<Func<T, TResult>> selector);
 
         Task<IEnumerable<T>> GetAllAsync();
-        Task<T> GetByIdAsync(int id);
+        Task<T> GetByIdAsync(long id);
         Task AddAsync(T entity);
         Task UpdateAsync(T entity);
-        Task DeleteAsync(int id);
+        Task DeleteAsync(long id);
         Task<int> SaveChangesAsync();
 
         Task<List<T>> ExecuteStoredProcedureAsync<T>(string storedProcedure) where T : class;

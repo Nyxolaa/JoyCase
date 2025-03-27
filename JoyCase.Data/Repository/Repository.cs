@@ -33,7 +33,7 @@ namespace JoyCase.Data.Repository
             return await _dbSet.ToListAsync();
         }
 
-        public async Task<T> GetByIdAsync(int id)
+        public async Task<T> GetByIdAsync(long id)
         {
             return await _dbSet.FindAsync(id);
         }
@@ -48,7 +48,7 @@ namespace JoyCase.Data.Repository
             _dbSet.Update(entity);
         }
 
-        public async Task DeleteAsync(int id)
+        public async Task DeleteAsync(long id)
         {
             var entity = await GetByIdAsync(id);
             if (entity != null)
