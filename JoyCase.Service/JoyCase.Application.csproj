@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Category\Command\" />
     <Folder Include="Services\" />
     <Folder Include="User\Command\" />
   </ItemGroup>
