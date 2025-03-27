@@ -1,4 +1,7 @@
-﻿using JoyCase.Application.Category.Query.GetRecursiveCategoriesQuery;
+﻿using JoyCase.Application.Category.Command.DeleteCategoryCommand;
+using JoyCase.Application.Category.Command.UpdateCategoryCommand;
+using JoyCase.Application.Category.Query.GetCategoryListQuery;
+using JoyCase.Application.Category.Query.GetRecursiveCategoriesQuery;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -28,10 +31,24 @@ public class CategoryController : ControllerBase
         return Ok(categories);
     }
 
-    //[HttpGet("{id}")]
-    //[Permission("product_view")] // urun sayfasina yalnizca product_view yetkisi olanlar erisir
-    //public IActionResult GetProduct(int id)
-    //{
-    //    return Ok(new { Id = id, Name = "Özel Ürün", Price = 999 });
-    //}
+    [HttpPut]
+    public async Task<IActionResult> UpdateCategory(UpdateCategoryCommand command)
+    {
+        var result = await _mediator.Send(command);
+        return result ? Ok() : NotFound();
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteCategory(long id)
+    {
+        var result = await _mediator.Send(new DeleteCategoryCommand { Id = id });
+        return result ? Ok() : NotFound();
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> GetAllCategories()
+    {
+        var categories = await _mediator.Send(new GetCategoryListQuery());
+        return Ok(categories);
+    }
 }
