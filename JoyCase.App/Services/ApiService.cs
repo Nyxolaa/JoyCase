@@ -41,12 +41,6 @@ namespace JoyCase.App.Services
             return response.IsSuccessStatusCode;
         }
 
-        //public async Task<bool> DeleteCategory(long id)
-        //{
-        //    var response = await _httpClient.DeleteAsync($"api/categories/{id}");
-        //    return response.IsSuccessStatusCode;
-        //}
-
         public async Task<bool> DeleteCategory(DeleteCategoryCommand request)
         {
             // Query string formatına çevir

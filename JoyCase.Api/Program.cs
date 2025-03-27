@@ -9,6 +9,7 @@ using Microsoft.OpenApi.Models;
 using Serilog.Sinks.MSSqlServer;
 using Serilog;
 using System.Data;
+using JoyCase.Api.Log;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -54,6 +55,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddScoped<IValidationService, ValidationService>();
 builder.Services.AddValidatorsFromAssemblyContaining<LoginUserValidator>();
 
+builder.Services.AddSingleton<LogService>();
+
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
@@ -98,6 +101,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+// execption handling middleware
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 app.UseHttpsRedirection();
 
