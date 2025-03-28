@@ -64,10 +64,10 @@ public class AuthController : ControllerBase
                 signingCredentials: creds
             );
 
-            if (response.Data == null)
-            {
-                return NotFound(response.Errors); // Bu durumda 'NotFound' dönecektir, 'OkObjectResult' değil.
-            }
+            //if (response.Data == null)
+            //{
+            //    return NotFound(response.Errors); // Bu durumda 'NotFound' döneer, 'OkObjectResult' değil.
+            //}
             return Ok(new
             {
                 token = new JwtSecurityTokenHandler().WriteToken(token),
