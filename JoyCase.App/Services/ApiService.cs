@@ -31,30 +31,50 @@ namespace JoyCase.App.Services
         #endregion
 
         #region CATEGORY
-        public async Task<List<GetCategoryResponseModel>> GetAllCategories()
+        public async Task<List<GetCategoryResponseModel>> GetAllCategories(string token)
         {
+            if (!string.IsNullOrEmpty(token))
+            {
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            }
             return await _httpClient.GetFromJsonAsync<List<GetCategoryResponseModel>>("api/categories/list-category") ?? new List<GetCategoryResponseModel>();
         }
 
-        public async Task<List<GetCategoryResponseModel>> GetRecursiveCategories()
+        public async Task<List<GetCategoryResponseModel>> GetRecursiveCategories(string token)
         {
+            if (!string.IsNullOrEmpty(token))
+            {
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            }
             return await _httpClient.GetFromJsonAsync<List<GetCategoryResponseModel>>("api/categories/get-recursive-categories") ?? new List<GetCategoryResponseModel>();
         }
 
-        public async Task<bool> CreateCategory(CreateCategoryCommandRequestModel command)
+        public async Task<bool> CreateCategory(CreateCategoryCommandRequestModel command, string token)
         {
+            if (!string.IsNullOrEmpty(token))
+            {
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            }
             var response = await _httpClient.PostAsJsonAsync("api/categories/create-category", command);
             return response.IsSuccessStatusCode;
         }
 
-        public async Task<bool> UpdateCategory(UpdateCategoryCommandRequestModel command)
+        public async Task<bool> UpdateCategory(UpdateCategoryCommandRequestModel command, string token)
         {
+            if (!string.IsNullOrEmpty(token))
+            {
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            }
             var response = await _httpClient.PutAsJsonAsync("api/categories/update-category", command);
             return response.IsSuccessStatusCode;
         }
 
-        public async Task<bool> DeleteCategory(DeleteCategoryCommandRequestModel request)
+        public async Task<bool> DeleteCategory(DeleteCategoryCommandRequestModel request, string token)
         {
+            if (!string.IsNullOrEmpty(token))
+            {
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            }
             // Query string formatına çevir
             var queryString = $"?Id={request.Id}"; // Id dışında parametre varsa buraya ekleyebilirsin.
 
@@ -66,8 +86,12 @@ namespace JoyCase.App.Services
 
 
         #region PRODUCT
-        public async Task<GetProductResponseModel> GetProductDetail(long id)
+        public async Task<GetProductResponseModel> GetProductDetail(long id, string token)
         {
+            if (!string.IsNullOrEmpty(token))
+            {
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            }
             return await _httpClient.GetFromJsonAsync<GetProductResponseModel>($"api/products/get-product-by-id/?Id={id}") ?? new GetProductResponseModel();
         }
         public async Task<List<GetProductResponseModel>> GetProductsByCategory(string token)
@@ -79,20 +103,32 @@ namespace JoyCase.App.Services
             return await _httpClient.GetFromJsonAsync<List<GetProductResponseModel>>("api/products/get-products-by-category") ?? new List<GetProductResponseModel>();
         }
 
-        public async Task<bool> CreateProduct(CreateProductRequestModel command)
+        public async Task<bool> CreateProduct(CreateProductRequestModel command, string token)
         {
+            if (!string.IsNullOrEmpty(token))
+            {
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            }
             var response = await _httpClient.PostAsJsonAsync("api/products/create-product", command);
             return response.IsSuccessStatusCode;
         }
 
-        public async Task<bool> UpdateProduct(UpdateProductRequestModel command)
+        public async Task<bool> UpdateProduct(UpdateProductRequestModel command, string token)
         {
+            if (!string.IsNullOrEmpty(token))
+            {
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            }
             var response = await _httpClient.PutAsJsonAsync("api/products/update-product", command);
             return response.IsSuccessStatusCode;
         }
 
-        public async Task<bool> DeleteProduct(long id)
+        public async Task<bool> DeleteProduct(long id, string token)
         {
+            if (!string.IsNullOrEmpty(token))
+            {
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            }
             var response = await _httpClient.DeleteAsync($"api/products/delete-product/?Id={id}");
             return response.IsSuccessStatusCode;
         }
