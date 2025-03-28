@@ -8130,3 +8130,367 @@ EXEC dbo.GetProductsByCategory
 2025-03-28 16:00:07.570 +03:00 [INF] Executed endpoint 'ProductController.GetProductsByCategory (JoyCase.Api)'
 2025-03-28 16:00:07.573 +03:00 [INF] HTTP GET /api/products/get-products-by-category responded 200 in 66.0312 ms
 2025-03-28 16:00:07.578 +03:00 [INF] Request finished HTTP/1.1 GET https://localhost:7046/api/products/get-products-by-category - 200 null application/json; charset=utf-8 77.9744ms
+2025-03-28 16:04:35.191 +03:00 [INF] User profile is available. Using 'C:\Users\arti365\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2025-03-28 16:04:36.232 +03:00 [INF] Now listening on: https://localhost:7046
+2025-03-28 16:04:36.240 +03:00 [INF] Now listening on: http://localhost:5202
+2025-03-28 16:04:36.545 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-03-28 16:04:36.547 +03:00 [INF] Hosting environment: Development
+2025-03-28 16:04:36.550 +03:00 [INF] Content root path: C:\Fairu\othrs\myRepo\JoyCase\JoyCase.Api
+2025-03-28 16:04:38.451 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7046/swagger/index.html - null null
+2025-03-28 16:04:39.874 +03:00 [INF] HTTP GET /swagger/index.html responded 200 in 402.1597 ms
+2025-03-28 16:04:39.906 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7046/swagger/index.html - 200 null text/html;charset=utf-8 1510.8606ms
+2025-03-28 16:04:42.531 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7046/_vs/browserLink - null null
+2025-03-28 16:04:42.531 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7046/_framework/aspnetcore-browser-refresh.js - null null
+2025-03-28 16:04:42.559 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7046/_framework/aspnetcore-browser-refresh.js - 200 13758 application/javascript; charset=utf-8 29.2223ms
+2025-03-28 16:04:42.779 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7046/_vs/browserLink - 200 null text/javascript; charset=UTF-8 249.1021ms
+2025-03-28 16:04:44.794 +03:00 [INF] Request starting HTTP/1.1 POST https://localhost:7046/api/auth/login - application/json; charset=utf-8 null
+2025-03-28 16:04:44.953 +03:00 [INF] Executing endpoint 'AuthController.Login (JoyCase.Api)'
+2025-03-28 16:04:45.001 +03:00 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(JoyCase.Application.User.Query.LoginUserQuery.LoginUserQuery) on controller AuthController (JoyCase.Api).
+2025-03-28 16:04:46.093 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7046/swagger/v1/swagger.json - null null
+2025-03-28 16:04:46.341 +03:00 [INF] HTTP GET /swagger/v1/swagger.json responded 200 in 242.1924 ms
+2025-03-28 16:04:46.346 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7046/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 253.0435ms
+2025-03-28 16:04:47.144 +03:00 [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2025-03-28 16:04:47.462 +03:00 [INF] Executed DbCommand (112ms) [Parameters=[@__request_Username_0='?' (Size = 50), @__request_Password_1='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SELECT [u2].[Id], [u2].[Username], [u2].[Firstname], [u2].[Lastname], [s0].[Id], [s0].[UserId], [s0].[RoleId], [s0].[Id0], [s0].[Name], [s0].[RoleId0], [s0].[PermissionId], [s1].[Id], [s1].[Name], [s1].[UserId], [s1].[PermissionId]
+FROM (
+    SELECT TOP(2) [u].[Id], [u].[Username], [u].[Firstname], [u].[Lastname]
+    FROM [Users] AS [u]
+    WHERE [u].[Username] = @__request_Username_0 AND [u].[PasswordHash] = @__request_Password_1
+) AS [u2]
+LEFT JOIN (
+    SELECT [r].[Id], [u0].[UserId], [u0].[RoleId], [s].[Id] AS [Id0], [s].[Name], [s].[RoleId] AS [RoleId0], [s].[PermissionId]
+    FROM [UserRoles] AS [u0]
+    INNER JOIN [Roles] AS [r] ON [u0].[RoleId] = [r].[Id]
+    LEFT JOIN (
+        SELECT [p].[Id], [p].[Name], [r0].[RoleId], [r0].[PermissionId]
+        FROM [RolePermissions] AS [r0]
+        INNER JOIN [Permissions] AS [p] ON [r0].[PermissionId] = [p].[Id]
+    ) AS [s] ON [r].[Id] = [s].[RoleId]
+) AS [s0] ON [u2].[Id] = [s0].[UserId]
+LEFT JOIN (
+    SELECT [p0].[Id], [p0].[Name], [u1].[UserId], [u1].[PermissionId]
+    FROM [UserPermissions] AS [u1]
+    INNER JOIN [Permissions] AS [p0] ON [u1].[PermissionId] = [p0].[Id]
+) AS [s1] ON [u2].[Id] = [s1].[UserId]
+ORDER BY [u2].[Id], [s0].[UserId], [s0].[RoleId], [s0].[Id], [s0].[RoleId0], [s0].[PermissionId], [s0].[Id0], [s1].[UserId], [s1].[PermissionId]
+2025-03-28 16:04:47.540 +03:00 [INF] Executing NotFoundObjectResult, writing value of type 'System.String[]'.
+2025-03-28 16:04:47.563 +03:00 [INF] Executed action AuthController.Login (JoyCase.Api) in 2555.2792ms
+2025-03-28 16:04:47.568 +03:00 [INF] Executed endpoint 'AuthController.Login (JoyCase.Api)'
+2025-03-28 16:04:47.572 +03:00 [INF] HTTP POST /api/auth/login responded 404 in 2766.1296 ms
+2025-03-28 16:04:47.600 +03:00 [INF] Request finished HTTP/1.1 POST https://localhost:7046/api/auth/login - 404 null application/json; charset=utf-8 2806.5763ms
+2025-03-28 16:06:03.536 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7046/swagger/index.html - null null
+2025-03-28 16:06:03.587 +03:00 [INF] HTTP GET /swagger/index.html responded 200 in 26.0580 ms
+2025-03-28 16:06:03.592 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7046/swagger/index.html - 200 null text/html;charset=utf-8 55.7924ms
+2025-03-28 16:06:03.694 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7046/_vs/browserLink - null null
+2025-03-28 16:06:03.717 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7046/_framework/aspnetcore-browser-refresh.js - null null
+2025-03-28 16:06:03.744 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7046/_framework/aspnetcore-browser-refresh.js - 200 13758 application/javascript; charset=utf-8 25.6929ms
+2025-03-28 16:06:03.770 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7046/_vs/browserLink - 200 null text/javascript; charset=UTF-8 76.0395ms
+2025-03-28 16:06:06.414 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7046/swagger/v1/swagger.json - null null
+2025-03-28 16:06:06.488 +03:00 [INF] HTTP GET /swagger/v1/swagger.json responded 200 in 65.7646 ms
+2025-03-28 16:06:06.502 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7046/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 88.4843ms
+2025-03-28 16:06:08.822 +03:00 [INF] Request starting HTTP/1.1 POST https://localhost:7046/api/auth/login - application/json; charset=utf-8 null
+2025-03-28 16:06:08.848 +03:00 [INF] Executing endpoint 'AuthController.Login (JoyCase.Api)'
+2025-03-28 16:06:08.860 +03:00 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(JoyCase.Application.User.Query.LoginUserQuery.LoginUserQuery) on controller AuthController (JoyCase.Api).
+2025-03-28 16:06:09.062 +03:00 [INF] Executed DbCommand (44ms) [Parameters=[@__request_Username_0='?' (Size = 50), @__request_Password_1='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SELECT [u2].[Id], [u2].[Username], [u2].[Firstname], [u2].[Lastname], [s0].[Id], [s0].[UserId], [s0].[RoleId], [s0].[Id0], [s0].[Name], [s0].[RoleId0], [s0].[PermissionId], [s1].[Id], [s1].[Name], [s1].[UserId], [s1].[PermissionId]
+FROM (
+    SELECT TOP(2) [u].[Id], [u].[Username], [u].[Firstname], [u].[Lastname]
+    FROM [Users] AS [u]
+    WHERE [u].[Username] = @__request_Username_0 AND [u].[PasswordHash] = @__request_Password_1
+) AS [u2]
+LEFT JOIN (
+    SELECT [r].[Id], [u0].[UserId], [u0].[RoleId], [s].[Id] AS [Id0], [s].[Name], [s].[RoleId] AS [RoleId0], [s].[PermissionId]
+    FROM [UserRoles] AS [u0]
+    INNER JOIN [Roles] AS [r] ON [u0].[RoleId] = [r].[Id]
+    LEFT JOIN (
+        SELECT [p].[Id], [p].[Name], [r0].[RoleId], [r0].[PermissionId]
+        FROM [RolePermissions] AS [r0]
+        INNER JOIN [Permissions] AS [p] ON [r0].[PermissionId] = [p].[Id]
+    ) AS [s] ON [r].[Id] = [s].[RoleId]
+) AS [s0] ON [u2].[Id] = [s0].[UserId]
+LEFT JOIN (
+    SELECT [p0].[Id], [p0].[Name], [u1].[UserId], [u1].[PermissionId]
+    FROM [UserPermissions] AS [u1]
+    INNER JOIN [Permissions] AS [p0] ON [u1].[PermissionId] = [p0].[Id]
+) AS [s1] ON [u2].[Id] = [s1].[UserId]
+ORDER BY [u2].[Id], [s0].[UserId], [s0].[RoleId], [s0].[Id], [s0].[RoleId0], [s0].[PermissionId], [s0].[Id0], [s1].[UserId], [s1].[PermissionId]
+2025-03-28 16:07:00.280 +03:00 [INF] Executing NotFoundObjectResult, writing value of type 'System.String[]'.
+2025-03-28 16:07:00.309 +03:00 [INF] Executed action AuthController.Login (JoyCase.Api) in 51447.0218ms
+2025-03-28 16:07:00.312 +03:00 [INF] Executed endpoint 'AuthController.Login (JoyCase.Api)'
+2025-03-28 16:07:00.315 +03:00 [INF] HTTP POST /api/auth/login responded 404 in 51471.2148 ms
+2025-03-28 16:07:00.319 +03:00 [INF] Request finished HTTP/1.1 POST https://localhost:7046/api/auth/login - 404 null application/json; charset=utf-8 51497.5578ms
+2025-03-28 16:07:08.467 +03:00 [INF] Request starting HTTP/1.1 POST https://localhost:7046/api/auth/login - application/json; charset=utf-8 null
+2025-03-28 16:07:08.490 +03:00 [INF] Executing endpoint 'AuthController.Login (JoyCase.Api)'
+2025-03-28 16:07:08.493 +03:00 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(JoyCase.Application.User.Query.LoginUserQuery.LoginUserQuery) on controller AuthController (JoyCase.Api).
+2025-03-28 16:07:08.611 +03:00 [INF] Executed DbCommand (24ms) [Parameters=[@__request_Username_0='?' (Size = 50), @__request_Password_1='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SELECT [u2].[Id], [u2].[Username], [u2].[Firstname], [u2].[Lastname], [s0].[Id], [s0].[UserId], [s0].[RoleId], [s0].[Id0], [s0].[Name], [s0].[RoleId0], [s0].[PermissionId], [s1].[Id], [s1].[Name], [s1].[UserId], [s1].[PermissionId]
+FROM (
+    SELECT TOP(2) [u].[Id], [u].[Username], [u].[Firstname], [u].[Lastname]
+    FROM [Users] AS [u]
+    WHERE [u].[Username] = @__request_Username_0 AND [u].[PasswordHash] = @__request_Password_1
+) AS [u2]
+LEFT JOIN (
+    SELECT [r].[Id], [u0].[UserId], [u0].[RoleId], [s].[Id] AS [Id0], [s].[Name], [s].[RoleId] AS [RoleId0], [s].[PermissionId]
+    FROM [UserRoles] AS [u0]
+    INNER JOIN [Roles] AS [r] ON [u0].[RoleId] = [r].[Id]
+    LEFT JOIN (
+        SELECT [p].[Id], [p].[Name], [r0].[RoleId], [r0].[PermissionId]
+        FROM [RolePermissions] AS [r0]
+        INNER JOIN [Permissions] AS [p] ON [r0].[PermissionId] = [p].[Id]
+    ) AS [s] ON [r].[Id] = [s].[RoleId]
+) AS [s0] ON [u2].[Id] = [s0].[UserId]
+LEFT JOIN (
+    SELECT [p0].[Id], [p0].[Name], [u1].[UserId], [u1].[PermissionId]
+    FROM [UserPermissions] AS [u1]
+    INNER JOIN [Permissions] AS [p0] ON [u1].[PermissionId] = [p0].[Id]
+) AS [s1] ON [u2].[Id] = [s1].[UserId]
+ORDER BY [u2].[Id], [s0].[UserId], [s0].[RoleId], [s0].[Id], [s0].[RoleId0], [s0].[PermissionId], [s0].[Id0], [s1].[UserId], [s1].[PermissionId]
+2025-03-28 16:07:12.681 +03:00 [INF] Executing NotFoundObjectResult, writing value of type 'System.String[]'.
+2025-03-28 16:07:12.684 +03:00 [INF] Executed action AuthController.Login (JoyCase.Api) in 4187.4346ms
+2025-03-28 16:07:12.687 +03:00 [INF] Executed endpoint 'AuthController.Login (JoyCase.Api)'
+2025-03-28 16:07:12.689 +03:00 [INF] HTTP POST /api/auth/login responded 404 in 4208.5225 ms
+2025-03-28 16:07:12.693 +03:00 [INF] Request finished HTTP/1.1 POST https://localhost:7046/api/auth/login - 404 null application/json; charset=utf-8 4227.518ms
+2025-03-28 16:07:49.914 +03:00 [INF] Request starting HTTP/1.1 POST https://localhost:7046/api/auth/login - application/json; charset=utf-8 null
+2025-03-28 16:07:49.918 +03:00 [INF] Executing endpoint 'AuthController.Login (JoyCase.Api)'
+2025-03-28 16:07:49.921 +03:00 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(JoyCase.Application.User.Query.LoginUserQuery.LoginUserQuery) on controller AuthController (JoyCase.Api).
+2025-03-28 16:07:49.932 +03:00 [INF] Executed DbCommand (3ms) [Parameters=[@__request_Username_0='?' (Size = 50), @__request_Password_1='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SELECT [u2].[Id], [u2].[Username], [u2].[Firstname], [u2].[Lastname], [s0].[Id], [s0].[UserId], [s0].[RoleId], [s0].[Id0], [s0].[Name], [s0].[RoleId0], [s0].[PermissionId], [s1].[Id], [s1].[Name], [s1].[UserId], [s1].[PermissionId]
+FROM (
+    SELECT TOP(2) [u].[Id], [u].[Username], [u].[Firstname], [u].[Lastname]
+    FROM [Users] AS [u]
+    WHERE [u].[Username] = @__request_Username_0 AND [u].[PasswordHash] = @__request_Password_1
+) AS [u2]
+LEFT JOIN (
+    SELECT [r].[Id], [u0].[UserId], [u0].[RoleId], [s].[Id] AS [Id0], [s].[Name], [s].[RoleId] AS [RoleId0], [s].[PermissionId]
+    FROM [UserRoles] AS [u0]
+    INNER JOIN [Roles] AS [r] ON [u0].[RoleId] = [r].[Id]
+    LEFT JOIN (
+        SELECT [p].[Id], [p].[Name], [r0].[RoleId], [r0].[PermissionId]
+        FROM [RolePermissions] AS [r0]
+        INNER JOIN [Permissions] AS [p] ON [r0].[PermissionId] = [p].[Id]
+    ) AS [s] ON [r].[Id] = [s].[RoleId]
+) AS [s0] ON [u2].[Id] = [s0].[UserId]
+LEFT JOIN (
+    SELECT [p0].[Id], [p0].[Name], [u1].[UserId], [u1].[PermissionId]
+    FROM [UserPermissions] AS [u1]
+    INNER JOIN [Permissions] AS [p0] ON [u1].[PermissionId] = [p0].[Id]
+) AS [s1] ON [u2].[Id] = [s1].[UserId]
+ORDER BY [u2].[Id], [s0].[UserId], [s0].[RoleId], [s0].[Id], [s0].[RoleId0], [s0].[PermissionId], [s0].[Id0], [s1].[UserId], [s1].[PermissionId]
+2025-03-28 16:07:57.279 +03:00 [INF] Executing NotFoundObjectResult, writing value of type 'System.String[]'.
+2025-03-28 16:07:57.280 +03:00 [INF] Executed action AuthController.Login (JoyCase.Api) in 7355.2557ms
+2025-03-28 16:07:57.282 +03:00 [INF] Executed endpoint 'AuthController.Login (JoyCase.Api)'
+2025-03-28 16:07:58.510 +03:00 [INF] HTTP POST /api/auth/login responded 404 in 8592.5820 ms
+2025-03-28 16:07:58.512 +03:00 [INF] Request finished HTTP/1.1 POST https://localhost:7046/api/auth/login - 404 null application/json; charset=utf-8 8598.4473ms
+2025-03-28 16:10:15.273 +03:00 [INF] Request starting HTTP/1.1 POST https://localhost:7046/api/auth/login - application/json; charset=utf-8 null
+2025-03-28 16:10:15.280 +03:00 [INF] Executing endpoint 'AuthController.Login (JoyCase.Api)'
+2025-03-28 16:10:15.287 +03:00 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(JoyCase.Application.User.Query.LoginUserQuery.LoginUserQuery) on controller AuthController (JoyCase.Api).
+2025-03-28 16:10:15.380 +03:00 [INF] Executed DbCommand (75ms) [Parameters=[@__request_Username_0='?' (Size = 50), @__request_Password_1='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SELECT [u2].[Id], [u2].[Username], [u2].[Firstname], [u2].[Lastname], [s0].[Id], [s0].[UserId], [s0].[RoleId], [s0].[Id0], [s0].[Name], [s0].[RoleId0], [s0].[PermissionId], [s1].[Id], [s1].[Name], [s1].[UserId], [s1].[PermissionId]
+FROM (
+    SELECT TOP(2) [u].[Id], [u].[Username], [u].[Firstname], [u].[Lastname]
+    FROM [Users] AS [u]
+    WHERE [u].[Username] = @__request_Username_0 AND [u].[PasswordHash] = @__request_Password_1
+) AS [u2]
+LEFT JOIN (
+    SELECT [r].[Id], [u0].[UserId], [u0].[RoleId], [s].[Id] AS [Id0], [s].[Name], [s].[RoleId] AS [RoleId0], [s].[PermissionId]
+    FROM [UserRoles] AS [u0]
+    INNER JOIN [Roles] AS [r] ON [u0].[RoleId] = [r].[Id]
+    LEFT JOIN (
+        SELECT [p].[Id], [p].[Name], [r0].[RoleId], [r0].[PermissionId]
+        FROM [RolePermissions] AS [r0]
+        INNER JOIN [Permissions] AS [p] ON [r0].[PermissionId] = [p].[Id]
+    ) AS [s] ON [r].[Id] = [s].[RoleId]
+) AS [s0] ON [u2].[Id] = [s0].[UserId]
+LEFT JOIN (
+    SELECT [p0].[Id], [p0].[Name], [u1].[UserId], [u1].[PermissionId]
+    FROM [UserPermissions] AS [u1]
+    INNER JOIN [Permissions] AS [p0] ON [u1].[PermissionId] = [p0].[Id]
+) AS [s1] ON [u2].[Id] = [s1].[UserId]
+ORDER BY [u2].[Id], [s0].[UserId], [s0].[RoleId], [s0].[Id], [s0].[RoleId0], [s0].[PermissionId], [s0].[Id0], [s1].[UserId], [s1].[PermissionId]
+2025-03-28 16:10:23.020 +03:00 [INF] Executing NotFoundObjectResult, writing value of type 'System.String[]'.
+2025-03-28 16:10:23.024 +03:00 [INF] Executed action AuthController.Login (JoyCase.Api) in 7726.676ms
+2025-03-28 16:10:23.025 +03:00 [INF] Executed endpoint 'AuthController.Login (JoyCase.Api)'
+2025-03-28 16:10:23.026 +03:00 [INF] HTTP POST /api/auth/login responded 404 in 7746.4200 ms
+2025-03-28 16:10:23.029 +03:00 [INF] Request finished HTTP/1.1 POST https://localhost:7046/api/auth/login - 404 null application/json; charset=utf-8 7756.2487ms
+2025-03-28 16:10:41.164 +03:00 [INF] User profile is available. Using 'C:\Users\arti365\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2025-03-28 16:10:41.752 +03:00 [INF] Now listening on: https://localhost:7046
+2025-03-28 16:10:41.756 +03:00 [INF] Now listening on: http://localhost:5202
+2025-03-28 16:10:41.877 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-03-28 16:10:41.880 +03:00 [INF] Hosting environment: Development
+2025-03-28 16:10:41.882 +03:00 [INF] Content root path: C:\Fairu\othrs\myRepo\JoyCase\JoyCase.Api
+2025-03-28 16:10:43.028 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7046/swagger/index.html - null null
+2025-03-28 16:10:44.321 +03:00 [INF] HTTP GET /swagger/index.html responded 200 in 470.9747 ms
+2025-03-28 16:10:44.348 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7046/swagger/index.html - 200 null text/html;charset=utf-8 1380.9149ms
+2025-03-28 16:10:45.814 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7046/_framework/aspnetcore-browser-refresh.js - null null
+2025-03-28 16:10:45.817 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7046/_vs/browserLink - null null
+2025-03-28 16:10:45.834 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7046/_framework/aspnetcore-browser-refresh.js - 200 13758 application/javascript; charset=utf-8 20.9995ms
+2025-03-28 16:10:45.973 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7046/_vs/browserLink - 200 null text/javascript; charset=UTF-8 159.7507ms
+2025-03-28 16:10:53.710 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7046/swagger/v1/swagger.json - null null
+2025-03-28 16:10:55.492 +03:00 [INF] HTTP GET /swagger/v1/swagger.json responded 200 in 1774.6301 ms
+2025-03-28 16:10:55.500 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7046/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 1790.5164ms
+2025-03-28 16:10:55.503 +03:00 [INF] Request starting HTTP/1.1 POST https://localhost:7046/api/auth/login - application/json; charset=utf-8 null
+2025-03-28 16:10:55.621 +03:00 [INF] Executing endpoint 'AuthController.Login (JoyCase.Api)'
+2025-03-28 16:10:55.659 +03:00 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(JoyCase.Application.User.Query.LoginUserQuery.LoginUserQuery) on controller AuthController (JoyCase.Api).
+2025-03-28 16:10:57.360 +03:00 [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2025-03-28 16:10:57.534 +03:00 [INF] Executed DbCommand (41ms) [Parameters=[@__request_Username_0='?' (Size = 50), @__request_Password_1='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SELECT [u2].[Id], [u2].[Username], [u2].[Firstname], [u2].[Lastname], [s0].[Id], [s0].[UserId], [s0].[RoleId], [s0].[Id0], [s0].[Name], [s0].[RoleId0], [s0].[PermissionId], [s1].[Id], [s1].[Name], [s1].[UserId], [s1].[PermissionId]
+FROM (
+    SELECT TOP(2) [u].[Id], [u].[Username], [u].[Firstname], [u].[Lastname]
+    FROM [Users] AS [u]
+    WHERE [u].[Username] = @__request_Username_0 AND [u].[PasswordHash] = @__request_Password_1
+) AS [u2]
+LEFT JOIN (
+    SELECT [r].[Id], [u0].[UserId], [u0].[RoleId], [s].[Id] AS [Id0], [s].[Name], [s].[RoleId] AS [RoleId0], [s].[PermissionId]
+    FROM [UserRoles] AS [u0]
+    INNER JOIN [Roles] AS [r] ON [u0].[RoleId] = [r].[Id]
+    LEFT JOIN (
+        SELECT [p].[Id], [p].[Name], [r0].[RoleId], [r0].[PermissionId]
+        FROM [RolePermissions] AS [r0]
+        INNER JOIN [Permissions] AS [p] ON [r0].[PermissionId] = [p].[Id]
+    ) AS [s] ON [r].[Id] = [s].[RoleId]
+) AS [s0] ON [u2].[Id] = [s0].[UserId]
+LEFT JOIN (
+    SELECT [p0].[Id], [p0].[Name], [u1].[UserId], [u1].[PermissionId]
+    FROM [UserPermissions] AS [u1]
+    INNER JOIN [Permissions] AS [p0] ON [u1].[PermissionId] = [p0].[Id]
+) AS [s1] ON [u2].[Id] = [s1].[UserId]
+ORDER BY [u2].[Id], [s0].[UserId], [s0].[RoleId], [s0].[Id], [s0].[RoleId0], [s0].[PermissionId], [s0].[Id0], [s1].[UserId], [s1].[PermissionId]
+2025-03-28 16:10:57.568 +03:00 [INF] Executing NotFoundObjectResult, writing value of type 'System.String[]'.
+2025-03-28 16:10:57.580 +03:00 [INF] Executed action AuthController.Login (JoyCase.Api) in 1915.3564ms
+2025-03-28 16:10:57.587 +03:00 [INF] Executed endpoint 'AuthController.Login (JoyCase.Api)'
+2025-03-28 16:10:57.597 +03:00 [INF] HTTP POST /api/auth/login responded 404 in 2076.3881 ms
+2025-03-28 16:10:57.622 +03:00 [INF] Request finished HTTP/1.1 POST https://localhost:7046/api/auth/login - 404 null application/json; charset=utf-8 2120.7964ms
+2025-03-28 16:12:39.424 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7046/swagger/index.html - null null
+2025-03-28 16:12:39.614 +03:00 [INF] HTTP GET /swagger/index.html responded 200 in 57.4952 ms
+2025-03-28 16:12:39.677 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7046/swagger/index.html - 200 null text/html;charset=utf-8 254.3866ms
+2025-03-28 16:12:39.862 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7046/_vs/browserLink - null null
+2025-03-28 16:12:39.862 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7046/_framework/aspnetcore-browser-refresh.js - null null
+2025-03-28 16:12:39.896 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7046/_framework/aspnetcore-browser-refresh.js - 200 13758 application/javascript; charset=utf-8 34.0957ms
+2025-03-28 16:12:40.060 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7046/_vs/browserLink - 200 null text/javascript; charset=UTF-8 197.946ms
+2025-03-28 16:12:44.030 +03:00 [INF] Request starting HTTP/1.1 POST https://localhost:7046/api/auth/login - application/json; charset=utf-8 null
+2025-03-28 16:12:44.037 +03:00 [INF] Executing endpoint 'AuthController.Login (JoyCase.Api)'
+2025-03-28 16:12:44.043 +03:00 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(JoyCase.Application.User.Query.LoginUserQuery.LoginUserQuery) on controller AuthController (JoyCase.Api).
+2025-03-28 16:12:44.166 +03:00 [INF] Executed DbCommand (56ms) [Parameters=[@__request_Username_0='?' (Size = 50), @__request_Password_1='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SELECT [u2].[Id], [u2].[Username], [u2].[Firstname], [u2].[Lastname], [s0].[Id], [s0].[UserId], [s0].[RoleId], [s0].[Id0], [s0].[Name], [s0].[RoleId0], [s0].[PermissionId], [s1].[Id], [s1].[Name], [s1].[UserId], [s1].[PermissionId]
+FROM (
+    SELECT TOP(2) [u].[Id], [u].[Username], [u].[Firstname], [u].[Lastname]
+    FROM [Users] AS [u]
+    WHERE [u].[Username] = @__request_Username_0 AND [u].[PasswordHash] = @__request_Password_1
+) AS [u2]
+LEFT JOIN (
+    SELECT [r].[Id], [u0].[UserId], [u0].[RoleId], [s].[Id] AS [Id0], [s].[Name], [s].[RoleId] AS [RoleId0], [s].[PermissionId]
+    FROM [UserRoles] AS [u0]
+    INNER JOIN [Roles] AS [r] ON [u0].[RoleId] = [r].[Id]
+    LEFT JOIN (
+        SELECT [p].[Id], [p].[Name], [r0].[RoleId], [r0].[PermissionId]
+        FROM [RolePermissions] AS [r0]
+        INNER JOIN [Permissions] AS [p] ON [r0].[PermissionId] = [p].[Id]
+    ) AS [s] ON [r].[Id] = [s].[RoleId]
+) AS [s0] ON [u2].[Id] = [s0].[UserId]
+LEFT JOIN (
+    SELECT [p0].[Id], [p0].[Name], [u1].[UserId], [u1].[PermissionId]
+    FROM [UserPermissions] AS [u1]
+    INNER JOIN [Permissions] AS [p0] ON [u1].[PermissionId] = [p0].[Id]
+) AS [s1] ON [u2].[Id] = [s1].[UserId]
+ORDER BY [u2].[Id], [s0].[UserId], [s0].[RoleId], [s0].[Id], [s0].[RoleId0], [s0].[PermissionId], [s0].[Id0], [s1].[UserId], [s1].[PermissionId]
+2025-03-28 16:12:44.178 +03:00 [INF] Executing NotFoundObjectResult, writing value of type 'System.String[]'.
+2025-03-28 16:12:44.185 +03:00 [INF] Executed action AuthController.Login (JoyCase.Api) in 137.7327ms
+2025-03-28 16:12:44.193 +03:00 [INF] Executed endpoint 'AuthController.Login (JoyCase.Api)'
+2025-03-28 16:12:44.204 +03:00 [INF] HTTP POST /api/auth/login responded 404 in 168.1195 ms
+2025-03-28 16:12:44.224 +03:00 [INF] Request finished HTTP/1.1 POST https://localhost:7046/api/auth/login - 404 null application/json; charset=utf-8 194.4498ms
+2025-03-28 16:12:44.471 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7046/swagger/v1/swagger.json - null null
+2025-03-28 16:12:44.498 +03:00 [INF] HTTP GET /swagger/v1/swagger.json responded 200 in 21.9079 ms
+2025-03-28 16:12:44.505 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7046/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 33.9375ms
+2025-03-28 16:12:51.989 +03:00 [INF] Request starting HTTP/1.1 POST https://localhost:7046/api/auth/login - application/json; charset=utf-8 null
+2025-03-28 16:12:51.999 +03:00 [INF] Executing endpoint 'AuthController.Login (JoyCase.Api)'
+2025-03-28 16:12:52.001 +03:00 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(JoyCase.Application.User.Query.LoginUserQuery.LoginUserQuery) on controller AuthController (JoyCase.Api).
+2025-03-28 16:12:52.028 +03:00 [INF] Executed DbCommand (2ms) [Parameters=[@__request_Username_0='?' (Size = 50), @__request_Password_1='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SELECT [u2].[Id], [u2].[Username], [u2].[Firstname], [u2].[Lastname], [s0].[Id], [s0].[UserId], [s0].[RoleId], [s0].[Id0], [s0].[Name], [s0].[RoleId0], [s0].[PermissionId], [s1].[Id], [s1].[Name], [s1].[UserId], [s1].[PermissionId]
+FROM (
+    SELECT TOP(2) [u].[Id], [u].[Username], [u].[Firstname], [u].[Lastname]
+    FROM [Users] AS [u]
+    WHERE [u].[Username] = @__request_Username_0 AND [u].[PasswordHash] = @__request_Password_1
+) AS [u2]
+LEFT JOIN (
+    SELECT [r].[Id], [u0].[UserId], [u0].[RoleId], [s].[Id] AS [Id0], [s].[Name], [s].[RoleId] AS [RoleId0], [s].[PermissionId]
+    FROM [UserRoles] AS [u0]
+    INNER JOIN [Roles] AS [r] ON [u0].[RoleId] = [r].[Id]
+    LEFT JOIN (
+        SELECT [p].[Id], [p].[Name], [r0].[RoleId], [r0].[PermissionId]
+        FROM [RolePermissions] AS [r0]
+        INNER JOIN [Permissions] AS [p] ON [r0].[PermissionId] = [p].[Id]
+    ) AS [s] ON [r].[Id] = [s].[RoleId]
+) AS [s0] ON [u2].[Id] = [s0].[UserId]
+LEFT JOIN (
+    SELECT [p0].[Id], [p0].[Name], [u1].[UserId], [u1].[PermissionId]
+    FROM [UserPermissions] AS [u1]
+    INNER JOIN [Permissions] AS [p0] ON [u1].[PermissionId] = [p0].[Id]
+) AS [s1] ON [u2].[Id] = [s1].[UserId]
+ORDER BY [u2].[Id], [s0].[UserId], [s0].[RoleId], [s0].[Id], [s0].[RoleId0], [s0].[PermissionId], [s0].[Id0], [s1].[UserId], [s1].[PermissionId]
+2025-03-28 16:12:52.032 +03:00 [INF] Executing NotFoundObjectResult, writing value of type 'System.String[]'.
+2025-03-28 16:12:52.035 +03:00 [INF] Executed action AuthController.Login (JoyCase.Api) in 31.9582ms
+2025-03-28 16:12:52.039 +03:00 [INF] Executed endpoint 'AuthController.Login (JoyCase.Api)'
+2025-03-28 16:12:52.052 +03:00 [INF] HTTP POST /api/auth/login responded 404 in 49.3773 ms
+2025-03-28 16:12:52.063 +03:00 [INF] Request finished HTTP/1.1 POST https://localhost:7046/api/auth/login - 404 null application/json; charset=utf-8 73.8323ms
+2025-03-28 16:12:53.027 +03:00 [INF] Request starting HTTP/1.1 POST https://localhost:7046/api/auth/login - application/json; charset=utf-8 null
+2025-03-28 16:12:53.033 +03:00 [INF] Executing endpoint 'AuthController.Login (JoyCase.Api)'
+2025-03-28 16:12:53.035 +03:00 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(JoyCase.Application.User.Query.LoginUserQuery.LoginUserQuery) on controller AuthController (JoyCase.Api).
+2025-03-28 16:12:53.049 +03:00 [INF] Executed DbCommand (3ms) [Parameters=[@__request_Username_0='?' (Size = 50), @__request_Password_1='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SELECT [u2].[Id], [u2].[Username], [u2].[Firstname], [u2].[Lastname], [s0].[Id], [s0].[UserId], [s0].[RoleId], [s0].[Id0], [s0].[Name], [s0].[RoleId0], [s0].[PermissionId], [s1].[Id], [s1].[Name], [s1].[UserId], [s1].[PermissionId]
+FROM (
+    SELECT TOP(2) [u].[Id], [u].[Username], [u].[Firstname], [u].[Lastname]
+    FROM [Users] AS [u]
+    WHERE [u].[Username] = @__request_Username_0 AND [u].[PasswordHash] = @__request_Password_1
+) AS [u2]
+LEFT JOIN (
+    SELECT [r].[Id], [u0].[UserId], [u0].[RoleId], [s].[Id] AS [Id0], [s].[Name], [s].[RoleId] AS [RoleId0], [s].[PermissionId]
+    FROM [UserRoles] AS [u0]
+    INNER JOIN [Roles] AS [r] ON [u0].[RoleId] = [r].[Id]
+    LEFT JOIN (
+        SELECT [p].[Id], [p].[Name], [r0].[RoleId], [r0].[PermissionId]
+        FROM [RolePermissions] AS [r0]
+        INNER JOIN [Permissions] AS [p] ON [r0].[PermissionId] = [p].[Id]
+    ) AS [s] ON [r].[Id] = [s].[RoleId]
+) AS [s0] ON [u2].[Id] = [s0].[UserId]
+LEFT JOIN (
+    SELECT [p0].[Id], [p0].[Name], [u1].[UserId], [u1].[PermissionId]
+    FROM [UserPermissions] AS [u1]
+    INNER JOIN [Permissions] AS [p0] ON [u1].[PermissionId] = [p0].[Id]
+) AS [s1] ON [u2].[Id] = [s1].[UserId]
+ORDER BY [u2].[Id], [s0].[UserId], [s0].[RoleId], [s0].[Id], [s0].[RoleId0], [s0].[PermissionId], [s0].[Id0], [s1].[UserId], [s1].[PermissionId]
+2025-03-28 16:12:53.054 +03:00 [INF] Executing NotFoundObjectResult, writing value of type 'System.String[]'.
+2025-03-28 16:12:53.059 +03:00 [INF] Executed action AuthController.Login (JoyCase.Api) in 21.9333ms
+2025-03-28 16:12:53.067 +03:00 [INF] Executed endpoint 'AuthController.Login (JoyCase.Api)'
+2025-03-28 16:12:53.070 +03:00 [INF] HTTP POST /api/auth/login responded 404 in 36.7491 ms
+2025-03-28 16:12:53.080 +03:00 [INF] Request finished HTTP/1.1 POST https://localhost:7046/api/auth/login - 404 null application/json; charset=utf-8 53.498ms
+2025-03-28 16:12:54.323 +03:00 [INF] Request starting HTTP/1.1 POST https://localhost:7046/api/auth/login - application/json; charset=utf-8 null
+2025-03-28 16:12:54.371 +03:00 [INF] Executing endpoint 'AuthController.Login (JoyCase.Api)'
+2025-03-28 16:12:54.376 +03:00 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(JoyCase.Application.User.Query.LoginUserQuery.LoginUserQuery) on controller AuthController (JoyCase.Api).
+2025-03-28 16:12:54.399 +03:00 [INF] Executed DbCommand (11ms) [Parameters=[@__request_Username_0='?' (Size = 50), @__request_Password_1='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SELECT [u2].[Id], [u2].[Username], [u2].[Firstname], [u2].[Lastname], [s0].[Id], [s0].[UserId], [s0].[RoleId], [s0].[Id0], [s0].[Name], [s0].[RoleId0], [s0].[PermissionId], [s1].[Id], [s1].[Name], [s1].[UserId], [s1].[PermissionId]
+FROM (
+    SELECT TOP(2) [u].[Id], [u].[Username], [u].[Firstname], [u].[Lastname]
+    FROM [Users] AS [u]
+    WHERE [u].[Username] = @__request_Username_0 AND [u].[PasswordHash] = @__request_Password_1
+) AS [u2]
+LEFT JOIN (
+    SELECT [r].[Id], [u0].[UserId], [u0].[RoleId], [s].[Id] AS [Id0], [s].[Name], [s].[RoleId] AS [RoleId0], [s].[PermissionId]
+    FROM [UserRoles] AS [u0]
+    INNER JOIN [Roles] AS [r] ON [u0].[RoleId] = [r].[Id]
+    LEFT JOIN (
+        SELECT [p].[Id], [p].[Name], [r0].[RoleId], [r0].[PermissionId]
+        FROM [RolePermissions] AS [r0]
+        INNER JOIN [Permissions] AS [p] ON [r0].[PermissionId] = [p].[Id]
+    ) AS [s] ON [r].[Id] = [s].[RoleId]
+) AS [s0] ON [u2].[Id] = [s0].[UserId]
+LEFT JOIN (
+    SELECT [p0].[Id], [p0].[Name], [u1].[UserId], [u1].[PermissionId]
+    FROM [UserPermissions] AS [u1]
+    INNER JOIN [Permissions] AS [p0] ON [u1].[PermissionId] = [p0].[Id]
+) AS [s1] ON [u2].[Id] = [s1].[UserId]
+ORDER BY [u2].[Id], [s0].[UserId], [s0].[RoleId], [s0].[Id], [s0].[RoleId0], [s0].[PermissionId], [s0].[Id0], [s1].[UserId], [s1].[PermissionId]
+2025-03-28 16:12:54.416 +03:00 [INF] Executing NotFoundObjectResult, writing value of type 'System.String[]'.
+2025-03-28 16:12:54.421 +03:00 [INF] Executed action AuthController.Login (JoyCase.Api) in 39.0861ms
+2025-03-28 16:12:54.425 +03:00 [INF] Executed endpoint 'AuthController.Login (JoyCase.Api)'
+2025-03-28 16:12:54.429 +03:00 [INF] HTTP POST /api/auth/login responded 404 in 58.8805 ms
+2025-03-28 16:12:54.463 +03:00 [INF] Request finished HTTP/1.1 POST https://localhost:7046/api/auth/login - 404 null application/json; charset=utf-8 112.5653ms

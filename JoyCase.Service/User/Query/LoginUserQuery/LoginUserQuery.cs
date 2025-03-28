@@ -33,7 +33,7 @@ namespace JoyCase.Application.User.Query.LoginUserQuery
                 }
 
                 var user = await _userRepository.SelectOneAsync(
-                    u => u.Username == request.Username,
+                    u => u.Username == request.Username && u.PasswordHash == request.Password,
                     u => new
                     {
                         u.Id,

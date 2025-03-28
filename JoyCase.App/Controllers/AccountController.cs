@@ -27,6 +27,10 @@ public class AccountController : Controller
         // kullanici dogrulama
         var result = await _apiService.LoginAsync(new LoginUserModel() { Username = email, Password = password });
 
+        if (string.IsNullOrEmpty(result.token))
+        {
+            return RedirectToAction("Login", "Account");
+        }
         HttpContext.Response.Cookies.Append("RememberUsername", email, new CookieOptions
         {
             Expires = DateTime.UtcNow.AddMonths(1), // 1 ay boyunca sakla

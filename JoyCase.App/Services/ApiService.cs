@@ -21,10 +21,14 @@ namespace JoyCase.App.Services
         {
             var result = await _httpClient.PostAsJsonAsync("api/auth/login", request);
 
-            var json = await result.Content.ReadAsStringAsync();
+            if (result.IsSuccessStatusCode)
+            {
+var json = await result.Content.ReadAsStringAsync();
             var tokenInfo = JsonSerializer.Deserialize<TokenInfo>(json);
 
             return tokenInfo;
+            }
+            return new TokenInfo();
 
         }
 

@@ -65,20 +65,7 @@ public class AuthController : ControllerBase
             var token = tokenHandler.CreateToken(tokenDescriptor);
             var jwtToken = tokenHandler.WriteToken(token);
 
-            //var key = new SymmetricSecurityKey(secretKey);
-            //var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-            //var token = new JwtSecurityToken(
-            //    issuer: jwtSettings["Issuer"],
-            //    audience: jwtSettings["Audience"],
-            //    claims: claims,
-            //    expires: DateTime.UtcNow.AddMinutes(Convert.ToDouble(jwtSettings["ExpiryInMinutes"])),
-            //    signingCredentials: creds
-            //);
-
-            //if (response.Data == null)
-            //{
-            //    return NotFound(response.Errors); // Bu durumda 'NotFound' döneer, 'OkObjectResult' değil.
-            //}
+          
             return Ok(new
             {
                 token = jwtToken,
