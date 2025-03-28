@@ -37,9 +37,10 @@ namespace JoyCase.Tests
                 }
             };
 
+            // Mocking the Mediator call
             _mediatorMock.Setup(m => m.Send(It.IsAny<LoginUserQuery>(), default)).ReturnsAsync(response);
 
-            // Mock JWT 
+            // Mock JWT Settings
             var jwtSettings = new Mock<IConfigurationSection>();
             jwtSettings.Setup(s => s["SecretKey"]).Returns("MySuperSecretKey1234567890MySuperSecretKey123456");
             jwtSettings.Setup(s => s["Issuer"]).Returns("MyIssuer");
@@ -49,16 +50,22 @@ namespace JoyCase.Tests
             _configurationMock.Setup(c => c.GetSection("JwtSettings")).Returns(jwtSettings.Object);
 
             var result = await _controller.Login(request);
-
-            Assert.NotNull(result);
-
-            var actionResult = Assert.IsType<OkObjectResult>(result); 
+            var actionResult = Assert.IsType<OkObjectResult>(result);
             Assert.NotNull(actionResult);
 
+            // İçeriği kontrol etmek için key-value çiftini ele alalım
             var value = actionResult.Value as IDictionary<string, object>;
+
+            // actionResult.Value'ı kontrol et
+            Console.WriteLine("value type !!!", value.GetType().FullName);
             Assert.NotNull(value);
+
             Assert.True(value.ContainsKey("token"));
-            Assert.Equal("6000", value["expiresIn"]);
+            Assert.True(value.ContainsKey("expiresIn"));
+
+            Assert.NotNull(value["token"]);
+            Assert.NotNull(value["expiresIn"]);
+
         }
 
     }

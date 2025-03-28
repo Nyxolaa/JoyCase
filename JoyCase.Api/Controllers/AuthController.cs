@@ -28,21 +28,20 @@ public class AuthController : ControllerBase
         var response = await _mediator.Send(request);
         if (response.Data != null)
         {
-            //if (response == null || response.Data == null)
-            //    return Unauthorized("Geçersiz kullanıcı adı veya şifre");
+            if (response == null || response.Data == null)
+                return Unauthorized("Geçersiz kullanıcı adı veya şifre");
 
             var jwtSettings = _configuration.GetSection("JwtSettings");
             var secretKey = Encoding.UTF8.GetBytes(jwtSettings["SecretKey"]);
-            // test sonrasi 
-            //var secretKey = Encoding.UTF8.GetBytes("MySuperSecretKey1234567890MySuperSecretKey123456");  // 256-bit key (32 byte) 
-
+            // test 
+            //var secretKey = Encoding.UTF8.GetBytes("MySuperSecretKey1234567890MySuperSecretKey123456");  // 256-bit 
 
             var claims = new List<Claim>
-        {
+            {
             new Claim(JwtRegisteredClaimNames.Sub, response.Data.UserId.ToString()), // kullanici id
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
             new Claim(ClaimTypes.Role, response.Data.RoleId.ToString()) // kullanici rol id
-        };
+            };
 
             // kullanicinin sahip olduğu tun yetkiler
             var permissions = response.Data.UserPermissions
@@ -65,6 +64,10 @@ public class AuthController : ControllerBase
                 signingCredentials: creds
             );
 
+            if (response.Data == null)
+            {
+                return NotFound(response.Errors); // Bu durumda 'NotFound' dönecektir, 'OkObjectResult' değil.
+            }
             return Ok(new
             {
                 token = new JwtSecurityTokenHandler().WriteToken(token),
