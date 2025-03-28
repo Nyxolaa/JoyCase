@@ -1,11 +1,5 @@
 ﻿using JoyCase.App.Models.CategoryModel;
-using JoyCase.Application.Category.Command.CreateCategoryCommand;
-using JoyCase.Application.Category.Command.DeleteCategoryCommand;
-using JoyCase.Application.Category.Command.UpdateCategoryCommand;
-using JoyCase.Application.Category.Dto;
-using JoyCase.Application.Product.Command.CreateProductCommand;
-using JoyCase.Application.Product.Command.UpdateProductCommand;
-using JoyCase.Application.Product.Dto;
+using JoyCase.App.Models.ProductModel;
 
 namespace JoyCase.App.Services
 {
@@ -19,14 +13,14 @@ namespace JoyCase.App.Services
         }
 
         #region CATEGORY
-        public async Task<List<CategoryDto>> GetAllCategories()
+        public async Task<List<GetCategoryResponseModel>> GetAllCategories()
         {
-            return await _httpClient.GetFromJsonAsync<List<CategoryDto>>("api/categories/list-category") ?? new List<CategoryDto>();
+            return await _httpClient.GetFromJsonAsync<List<GetCategoryResponseModel>>("api/categories/list-category") ?? new List<GetCategoryResponseModel>();
         }
 
-        public async Task<List<CategoryDto>> GetRecursiveCategories()
+        public async Task<List<GetCategoryResponseModel>> GetRecursiveCategories()
         {
-            return await _httpClient.GetFromJsonAsync<List<CategoryDto>>("api/categories/get-recursive-categories") ?? new List<CategoryDto>();
+            return await _httpClient.GetFromJsonAsync<List<GetCategoryResponseModel>>("api/categories/get-recursive-categories") ?? new List<GetCategoryResponseModel>();
         }
 
         public async Task<bool> CreateCategory(CreateCategoryCommandRequestModel command)
@@ -41,7 +35,7 @@ namespace JoyCase.App.Services
             return response.IsSuccessStatusCode;
         }
 
-        public async Task<bool> DeleteCategory(DeleteCategoryCommand request)
+        public async Task<bool> DeleteCategory(DeleteCategoryCommandRequestModel request)
         {
             // Query string formatına çevir
             var queryString = $"?Id={request.Id}"; // Id dışında parametre varsa buraya ekleyebilirsin.
@@ -54,34 +48,32 @@ namespace JoyCase.App.Services
 
 
         #region PRODUCT
-        public async Task<List<ProductDto>> GetProductDetail(long id)
+        public async Task<GetProductResponseModel> GetProductDetail(long id)
         {
-            return await _httpClient.GetFromJsonAsync<List<ProductDto>>($"api/products/{id}") ?? new List<ProductDto>();
+            return await _httpClient.GetFromJsonAsync<GetProductResponseModel>($"api/products/get-product-by-id/?Id={id}") ?? new GetProductResponseModel();
+        }
+        public async Task<List<GetProductResponseModel>> GetProductsByCategory()
+        {
+            return await _httpClient.GetFromJsonAsync<List<GetProductResponseModel>>("api/products/get-products-by-category") ?? new List<GetProductResponseModel>();
         }
 
-        public async Task<List<ProductDto>> GetProductsByCategory()
+        public async Task<bool> CreateProduct(CreateProductRequestModel command)
         {
-            return await _httpClient.GetFromJsonAsync<List<ProductDto>>("api/products/GetProductsByCategory") ?? new List<ProductDto>();
-        }
-
-        public async Task<bool> CreateProduct(CreateProductCommand command)
-        {
-            var response = await _httpClient.PostAsJsonAsync("api/products", command);
+            var response = await _httpClient.PostAsJsonAsync("api/products/create-product", command);
             return response.IsSuccessStatusCode;
         }
 
-        public async Task<bool> UpdateProduct(UpdateProductCommand command)
+        public async Task<bool> UpdateProduct(UpdateProductRequestModel command)
         {
-            var response = await _httpClient.PutAsJsonAsync("api/products", command);
+            var response = await _httpClient.PutAsJsonAsync("api/products/update-product", command);
             return response.IsSuccessStatusCode;
         }
 
         public async Task<bool> DeleteProduct(long id)
         {
-            var response = await _httpClient.DeleteAsync($"api/products/{id}");
+            var response = await _httpClient.DeleteAsync($"api/products/delete-product/?Id={id}");
             return response.IsSuccessStatusCode;
         }
-
         #endregion
     }
 }

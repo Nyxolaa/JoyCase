@@ -25,13 +25,18 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\JoyCase.Data\JoyCase.Data.csproj" />
     <ProjectReference Include="..\JoyCase.Entity\JoyCase.Entity.csproj" />
-    <ProjectReference Include="..\JoyCase.Service\JoyCase.Application.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Models\ProductModel\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="Views\Category\Create.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
   </ItemGroup>
 
 </Project>

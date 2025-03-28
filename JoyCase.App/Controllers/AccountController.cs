@@ -1,6 +1,4 @@
-﻿using JoyCase.Application.User.Query.LoginUserQuery;
-using MediatR;
-using Microsoft.AspNetCore.Authentication;
+﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -8,11 +6,9 @@ using System.Security.Claims;
 public class AccountController : Controller
 {
     private readonly IHttpContextAccessor _httpContextAccessor;
-    private readonly IMediator _mediator;
-    public AccountController(IHttpContextAccessor httpContextAccessor, IMediator mediator)
+    public AccountController(IHttpContextAccessor httpContextAccessor)
     {
         _httpContextAccessor = httpContextAccessor;
-        _mediator = mediator;
     }
 
     [HttpGet]

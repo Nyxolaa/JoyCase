@@ -1,8 +1,6 @@
 using JoyCase.App.Models;
 using JoyCase.App.Models.CategoryModel;
 using JoyCase.App.Services;
-using JoyCase.Application.Category.Command.CreateCategoryCommand;
-using JoyCase.Application.Category.Command.DeleteCategoryCommand;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -21,8 +19,9 @@ namespace JoyCase.App.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var categories = await _apiService.GetAllCategories();
+            var categories = await _apiService.GetRecursiveCategories();
             ViewBag.Categories = categories;
+
             return View();
         }
         public async Task<IActionResult> CreateCategory(CreateCategoryCommandRequestModel command)
@@ -32,7 +31,7 @@ namespace JoyCase.App.Controllers
         }
         public async Task<IActionResult> Delete(long id)
         {
-            var command = new DeleteCategoryCommand { Id = id };
+            var command = new DeleteCategoryCommandRequestModel { Id = id };
             var success = await _apiService.DeleteCategory(command);
 
             return success ? RedirectToAction("Index") : View("Error");

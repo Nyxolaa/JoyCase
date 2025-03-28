@@ -21,7 +21,7 @@ namespace JoyCase.Application.Product.Query.GetProductByIdQuery
         public async Task<ProductDto> Handle(GetProductByIdQuery request, CancellationToken cancellationToken)
         {
             return await _productRepository.SelectOneAsync(
-                filter: p => true,
+                filter: p => p.Id == request.Id,
                 selector: p => new ProductDto
                 {
                     ProductId = p.Id,

@@ -9,9 +9,7 @@ namespace JoyCase.Application.Product.Command.CreateProductCommand
         public long CategoryId { get; set; }
         public string ImageUrl { get; set; }
         public decimal Price { get; set; }
-        public bool IsActive { get; set; }
         public string Description { get; set; }
-        public string CreatedBy { get; set; } = null!;
     }
 
     public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand, long>
@@ -31,9 +29,9 @@ namespace JoyCase.Application.Product.Command.CreateProductCommand
                 CategoryId = request.CategoryId,
                 ImageUrl = request.ImageUrl,
                 Price = request.Price,
-                IsActive = request.IsActive,
+                IsActive = true,
                 Description = request.Description,
-                CreatedBy = request.CreatedBy,
+                CreatedBy = "",
                 CreatedAt = DateTime.UtcNow
             };
 

@@ -7,7 +7,6 @@ namespace JoyCase.Application.Category.Command.CreateCategoryCommand
     {
         public string Name { get; set; } = null!;
         public long? ParentId { get; set; }
-        public string CreatedBy { get; set; } = null!;
     }
 
     public class CreateCategoryCommandHandler : IRequestHandler<CreateCategoryCommand, long>
@@ -24,7 +23,7 @@ namespace JoyCase.Application.Category.Command.CreateCategoryCommand
             {
                 Name = request.Name,
                 ParentId = request.ParentId,
-                CreatedBy = request.CreatedBy,
+                CreatedBy = "",
                 CreatedAt = DateTime.UtcNow
             };
 

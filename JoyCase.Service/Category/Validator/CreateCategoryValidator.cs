@@ -8,7 +8,6 @@ namespace JoyCase.Application.Category.Validator
         public CreateCategoryCommandValidator()
         {
             RuleFor(x => x.Name).NotEmpty().MaximumLength(26);
-            RuleFor(x => x.CreatedBy).NotEmpty();
         }
     }
 }

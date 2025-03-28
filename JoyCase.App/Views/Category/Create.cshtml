@@ -1,0 +1,29 @@
+﻿@{
+    ViewData["Title"] = "Yeni Kategori Oluştur";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="container mt-4">
+    <h2 class="text-center">Yeni Kategori Oluştur</h2>
+
+    <form asp-controller="Category" asp-action="Create" method="post">
+        <div class="mb-3">
+            <label for="CategoryName" class="form-label">Kategori Adı</label>
+            <input type="text" class="form-control" id="CategoryName" name="CategoryName" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="ParentCategory" class="form-label">Üst Kategori (Opsiyonel)</label>
+            <select class="form-select" id="ParentCategory" name="ParentCategory">
+                <option value="">Üst Kategori Yok</option>
+                @foreach (var category in ViewBag.Categories)
+                {
+                    <option value="@category.Id">@category.Name</option>
+                }
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Kaydet</button>
+        <a asp-controller="Category" asp-action="Index" class="btn btn-secondary">İptal</a>
+    </form>
+</section>

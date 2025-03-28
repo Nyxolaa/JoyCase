@@ -1,6 +1,28 @@
 ﻿@{
-    ViewData["Title"] = "CATEGORY";
+    ViewData["Title"] = "Kategoriler";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<h1>@ViewData["Title"]</h1>
 
-<p>CATEGORY</p>
+<section class="container mt-4">
+    <h2 class="text-center">Kategoriler</h2>
+    <div class="text-end mb-3">
+        <a class="btn btn-success" asp-controller="Category" asp-action="Create">Yeni Kategori Oluştur</a>
+    </div>
+    <ul class="list-group">
+        @foreach (var category in ViewBag.Categories)
+        {
+            <li class="list-group-item">
+                @category.Name
+                @if (category.SubCategories != null && category.SubCategories.Count > 0)
+                {
+                    <ul class="list-group mt-2 ms-3">
+                        @foreach (var subCategory in category.SubCategories)
+                        {
+                            <li class="list-group-item">@subCategory.Name</li>
+                        }
+                    </ul>
+                }
+            </li>
+        }
+    </ul>
+</section>
