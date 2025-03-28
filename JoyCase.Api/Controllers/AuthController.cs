@@ -33,6 +33,9 @@ public class AuthController : ControllerBase
 
             var jwtSettings = _configuration.GetSection("JwtSettings");
             var secretKey = Encoding.UTF8.GetBytes(jwtSettings["SecretKey"]);
+            // test sonrasi 
+            //var secretKey = Encoding.UTF8.GetBytes("MySuperSecretKey1234567890MySuperSecretKey123456");  // 256-bit key (32 byte) 
+
 
             var claims = new List<Claim>
         {
