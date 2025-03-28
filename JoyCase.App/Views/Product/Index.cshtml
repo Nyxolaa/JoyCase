@@ -1,32 +1,55 @@
 ﻿@using JoyCase.App.Models.ProductModel
 @{
-    ViewData["Title"] = "Ürünler";
+    ViewData["Title"] = "Kategorili Ürün Listesi";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <section class="container mt-4">
-    <h2 class="text-center">Ürünler</h2>
+    <h2 class="text-center">Kategorili Ürün Listesi</h2>
     <div class="text-end mb-3">
         <a class="btn btn-success" asp-controller="Product" asp-action="Create">Yeni Ürün Oluştur</a>
     </div>
-    <ul class="list-group">
-        @foreach (var product in ViewBag.Products as List<GetProductResponseModel>)
+    @if (ViewBag.Products != null && ((IEnumerable<GetProductResponseModel>)ViewBag.Products).Any())
+    {
+        var groupedProducts = ((IEnumerable<GetProductResponseModel>)ViewBag.Products)
+        .GroupBy(p => p.CategoryName);
+
+        foreach (var group in groupedProducts)
         {
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-                <div>
-                    <strong>@product.ProductName</strong> - @product.Price TL
+            <h3 class="mt-4">@group.Key</h3>
+            <div class="card mb-4">
+                <div class="card-body">
+                    <ul class="list-group">
+                        @foreach (var product in group)
+                        {
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <span>
+                                    <strong>@product.ProductName</strong> - <span class="text-success">@product.Price TL</span>
+                                </span>
+                                <span>
+                                    <a asp-controller="Product" asp-action="ProductDetail" asp-route-id="@product.ProductId" class="btn btn-info btn-sm">Detay Gör</a>
+                                    <a asp-controller="Product" asp-action="Edit" asp-route-id="@product.ProductId" class="btn btn-warning btn-sm">Düzenle</a>
+                                    <a asp-controller="Product" asp-action="DeleteProduct" asp-route-id="@product.ProductId" class="btn btn-danger btn-sm" onclick="return confirm('Bu ürünü silmek istediğinize emin misiniz?');">Sil</a>
+                                </span>
+                            </li>
+                        }
+                    </ul>
                 </div>
-                <div>
-                    <strong>@product.CategoryName</strong>
-                </div>
-                <div>
-                    <strong>@product.Description</strong>
-                </div>
-                <div>
-                    <a asp-controller="Product" asp-action="Edit" asp-route-id="@product.ProductId" class="btn btn-warning btn-sm">Düzenle</a>
-                    <a asp-controller="Product" asp-action="DeleteProduct" asp-route-id="@product.ProductId" class="btn btn-danger btn-sm">Sil</a>
-                </div>
-            </li>
+            </div>
         }
-    </ul>
+    }
+    else
+    {
+        <p class="text-center">Hiç ürün bulunamadı.</p>
+    }
 </section>
+
+<style>
+    .list-group-item {
+        transition: background-color 0.3s;
+    }
+
+        .list-group-item:hover {
+            background-color: #f8f9fa;
+        }
+</style>

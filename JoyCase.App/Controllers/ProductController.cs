@@ -36,6 +36,15 @@ namespace JoyCase.App.Controllers
             return Redirect("Index");
         }
 
+        public async Task<IActionResult> ProductDetail(long id)
+        {
+            var product = await _apiService.GetProductDetail(id);
+            //if (product == null)
+            //{
+            //    return NotFound(); // Ürün bulunamadýðýnda 404 döner
+            //}
+            return View(product);
+        }
         public async Task<IActionResult> Edit(long id)
         {
             var product = await _apiService.GetProductDetail(id);

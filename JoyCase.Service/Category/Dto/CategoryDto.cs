@@ -7,5 +7,4 @@
         public long? ParentId { get; set; }
         public string FullPath { get; set; } = string.Empty; // NULL gelirse hata olmaması icin
     }
-
 }

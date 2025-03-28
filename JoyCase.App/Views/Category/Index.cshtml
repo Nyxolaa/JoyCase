@@ -1,26 +1,33 @@
-﻿@{
+﻿@using JoyCase.App.Models.CategoryModel
+@{
     ViewData["Title"] = "Kategoriler";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <section class="container mt-4">
     <h2 class="text-center">Kategoriler</h2>
-    <div class="text-end mb-3">
+   @*  <div class="text-end mb-3">
         <a class="btn btn-success" asp-controller="Category" asp-action="Create">Yeni Kategori Oluştur</a>
-    </div>
+    </div> *@
     <ul class="list-group">
-        @foreach (var category in ViewBag.Categories)
+        @foreach (var category in (IEnumerable<GetCategoryResponseModel>)ViewBag.Categories)
         {
             <li class="list-group-item">
-                @category.Name
-                @if (category.SubCategories != null && category.SubCategories.Count > 0)
+                @category.FullPath
+                @if (category.ParentId == null)
                 {
-                    <ul class="list-group mt-2 ms-3">
-                        @foreach (var subCategory in category.SubCategories)
-                        {
-                            <li class="list-group-item">@subCategory.Name</li>
-                        }
-                    </ul>
+                    // Eğer bu kategori üst kategoriyse, alt kategorileri de göster
+                    var subCategories = ((IEnumerable<GetCategoryResponseModel>)ViewBag.Categories)
+                    .Where(c => c.ParentId == category.Id);
+                    if (subCategories.Any())
+                    {
+                        <ul class="list-group mt-2 ms-3">
+                            @foreach (var subCategory in subCategories)
+                            {
+                                <li class="list-group-item">@subCategory.FullPath</li>
+                            }
+                        </ul>
+                    }
                 }
             </li>
         }

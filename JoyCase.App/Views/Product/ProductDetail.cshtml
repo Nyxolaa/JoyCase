@@ -1,0 +1,19 @@
+﻿@using JoyCase.App.Models.ProductModel
+@{
+    ViewData["Title"] = "Ürün Detayı";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="container mt-4">
+    <h2 class="text-center">Ürün Detayı</h2>
+    <div class="card mb-3">
+        <div class="card-body">
+            <h5 class="card-title">@Model.ProductName</h5>
+            <p class="card-text"><strong>Açıklama:</strong> @Model.Description</p>
+            <p class="card-text"><strong>Fiyat:</strong> @Model.Price TL</p>
+            <p class="card-text"><strong>Kategori:</strong> @Model.CategoryName</p>
+            <a asp-controller="Product" asp-action="Edit" asp-route-id="@Model.ProductId" class="btn btn-warning">Düzenle</a>
+            <a asp-controller="Product" asp-action="Index" class="btn btn-secondary">Geri</a>
+        </div>
+    </div>
+</section>

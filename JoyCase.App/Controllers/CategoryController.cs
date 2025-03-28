@@ -21,7 +21,6 @@ namespace JoyCase.App.Controllers
         {
             var categories = await _apiService.GetRecursiveCategories();
             ViewBag.Categories = categories;
-
             return View();
         }
         public async Task<IActionResult> CreateCategory(CreateCategoryCommandRequestModel command)
