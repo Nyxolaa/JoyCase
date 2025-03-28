@@ -27,19 +27,25 @@ namespace JoyCase.App.Controllers
 
         public async Task<IActionResult> Create()
         {
-            var categories = await _apiService.GetAllCategories();
+            var token = Request.Cookies["Token"];
+
+            var categories = await _apiService.GetAllCategories(token);
             ViewBag.Categories = categories;
             return View();
         }
         public async Task<IActionResult> CreateProduct(CreateProductRequestModel createProductRequestModel)
         {
-            var categories = await _apiService.CreateProduct(createProductRequestModel);
+            var token = Request.Cookies["Token"];
+
+            var categories = await _apiService.CreateProduct(createProductRequestModel,token);
             return Redirect("Index");
         }
 
         public async Task<IActionResult> ProductDetail(long id)
         {
-            var product = await _apiService.GetProductDetail(id);
+            var token = Request.Cookies["Token"];
+
+            var product = await _apiService.GetProductDetail(id,token);
             //if (product == null)
             //{
             //    return NotFound(); // Ürün bulunamadýðýnda 404 döner
@@ -48,19 +54,25 @@ namespace JoyCase.App.Controllers
         }
         public async Task<IActionResult> Edit(long id)
         {
-            var product = await _apiService.GetProductDetail(id);
-            var categories = await _apiService.GetAllCategories();
+            var token = Request.Cookies["Token"];
+
+            var product = await _apiService.GetProductDetail(id,token);
+            var categories = await _apiService.GetAllCategories(token);
             ViewBag.Categories = categories;
             return View(new UpdateProductRequestModel() { Id = product.ProductId.Value, CategoryId = product.CategoryId.Value, Description = product.Description, ImageUrl = product.ImageUrl, IsActive = product.IsActive, Name = product.ProductName, Price = product.Price.Value });
         }
         public async Task<IActionResult> EditProduct(UpdateProductRequestModel updateProductRequestModel)
         {
-            var product = await _apiService.UpdateProduct(updateProductRequestModel);
+            var token = Request.Cookies["Token"];
+
+            var product = await _apiService.UpdateProduct(updateProductRequestModel, token);
             return Redirect("Index");
         }
         public async Task<IActionResult> DeleteProduct(long id)
         {
-            var product = await _apiService.DeleteProduct(id);
+            var token = Request.Cookies["Token"];
+
+            var product = await _apiService.DeleteProduct(id, token);
             return RedirectToAction("Index", "Product");
         }
 

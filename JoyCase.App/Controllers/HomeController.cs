@@ -20,7 +20,7 @@ namespace JoyCase.App.Controllers
         {
             var token = Request.Cookies["Token"];
             if (string.IsNullOrEmpty(token)) { return RedirectToAction("Login", "Account"); }
-            var categories = await _apiService.GetAllCategories();
+            var categories = await _apiService.GetAllCategories(token);
             ViewBag.Categories = categories;
             var products = await _apiService.GetProductsByCategory(token);
             ViewBag.Products = products;

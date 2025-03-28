@@ -19,19 +19,23 @@ namespace JoyCase.App.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var categories = await _apiService.GetRecursiveCategories();
+            var token = Request.Cookies["Token"];
+            var categories = await _apiService.GetRecursiveCategories(token);
             ViewBag.Categories = categories;
             return View();
         }
         public async Task<IActionResult> CreateCategory(CreateCategoryCommandRequestModel command)
         {
-            var success = await _apiService.CreateCategory(command);
+            var token = Request.Cookies["Token"];
+            var success = await _apiService.CreateCategory(command, token);
             return success ? RedirectToAction("Index") : View("Error");
         }
         public async Task<IActionResult> Delete(long id)
         {
+            var token = Request.Cookies["Token"];
+
             var command = new DeleteCategoryCommandRequestModel { Id = id };
-            var success = await _apiService.DeleteCategory(command);
+            var success = await _apiService.DeleteCategory(command, token);
 
             return success ? RedirectToAction("Index") : View("Error");
         }
