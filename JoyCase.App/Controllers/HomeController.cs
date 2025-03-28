@@ -18,9 +18,11 @@ namespace JoyCase.App.Controllers
 
         public async Task<IActionResult> Index()
         {
+            var token = Request.Cookies["Token"];
+            if (string.IsNullOrEmpty(token)) { return RedirectToAction("Login", "Account"); }
             var categories = await _apiService.GetAllCategories();
             ViewBag.Categories = categories;
-            var products = await _apiService.GetProductsByCategory();
+            var products = await _apiService.GetProductsByCategory(token);
             ViewBag.Products = products;
             return View();
         }

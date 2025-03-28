@@ -32,9 +32,6 @@ public class AuthController : ControllerBase
                 return Unauthorized("Geçersiz kullanıcı adı veya şifre");
 
             var jwtSettings = _configuration.GetSection("JwtSettings");
-            var secretKey = Encoding.UTF8.GetBytes(jwtSettings["SecretKey"]);
-            // test 
-            //var secretKey = Encoding.UTF8.GetBytes("MySuperSecretKey1234567890MySuperSecretKey123456");  // 256-bit 
 
             var claims = new List<Claim>
             {
@@ -54,15 +51,29 @@ public class AuthController : ControllerBase
                 claims.Add(new Claim("Permission", permission));
             }
 
-            var key = new SymmetricSecurityKey(secretKey);
-            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-            var token = new JwtSecurityToken(
-                issuer: jwtSettings["Issuer"],
-                audience: jwtSettings["Audience"],
-                claims: claims,
-                expires: DateTime.UtcNow.AddMinutes(Convert.ToDouble(jwtSettings["ExpiryInMinutes"])),
-                signingCredentials: creds
-            );
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var secretKey = Encoding.UTF8.GetBytes(jwtSettings["SecretKey"]);
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(claims),
+                Expires = DateTime.UtcNow.AddHours(1),
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(secretKey), SecurityAlgorithms.HmacSha256Signature),
+                Issuer = jwtSettings["Issuer"], // Bu değer, doğrulamada kullanılan issuer ile aynı olmalı
+                Audience = jwtSettings["Audience"] // Bu değer, doğrulamada kullanılan audience ile aynı olmalı
+            };
+
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+            var jwtToken = tokenHandler.WriteToken(token);
+
+            //var key = new SymmetricSecurityKey(secretKey);
+            //var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+            //var token = new JwtSecurityToken(
+            //    issuer: jwtSettings["Issuer"],
+            //    audience: jwtSettings["Audience"],
+            //    claims: claims,
+            //    expires: DateTime.UtcNow.AddMinutes(Convert.ToDouble(jwtSettings["ExpiryInMinutes"])),
+            //    signingCredentials: creds
+            //);
 
             //if (response.Data == null)
             //{
@@ -70,7 +81,7 @@ public class AuthController : ControllerBase
             //}
             return Ok(new
             {
-                token = new JwtSecurityTokenHandler().WriteToken(token),
+                token = jwtToken,
                 expiresIn = jwtSettings["ExpiryInMinutes"]
             });
         }

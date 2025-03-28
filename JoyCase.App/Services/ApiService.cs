@@ -1,5 +1,9 @@
-﻿using JoyCase.App.Models.CategoryModel;
+﻿using JoyCase.App.Models;
+using JoyCase.App.Models.CategoryModel;
 using JoyCase.App.Models.ProductModel;
+using JoyCase.App.Models.UserModel;
+using System.Net.Http.Headers;
+using System.Text.Json;
 
 namespace JoyCase.App.Services
 {
@@ -11,6 +15,20 @@ namespace JoyCase.App.Services
         {
             _httpClient = httpClient;
         }
+
+        #region AUTH
+        public async Task<TokenInfo> LoginAsync(LoginUserModel request)
+        {
+            var result = await _httpClient.PostAsJsonAsync("api/auth/login", request);
+
+            var json = await result.Content.ReadAsStringAsync();
+            var tokenInfo = JsonSerializer.Deserialize<TokenInfo>(json);
+
+            return tokenInfo;
+
+        }
+
+        #endregion
 
         #region CATEGORY
         public async Task<List<GetCategoryResponseModel>> GetAllCategories()
@@ -52,8 +70,12 @@ namespace JoyCase.App.Services
         {
             return await _httpClient.GetFromJsonAsync<GetProductResponseModel>($"api/products/get-product-by-id/?Id={id}") ?? new GetProductResponseModel();
         }
-        public async Task<List<GetProductResponseModel>> GetProductsByCategory()
+        public async Task<List<GetProductResponseModel>> GetProductsByCategory(string token)
         {
+            if (!string.IsNullOrEmpty(token))
+            {
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            }
             return await _httpClient.GetFromJsonAsync<List<GetProductResponseModel>>("api/products/get-products-by-category") ?? new List<GetProductResponseModel>();
         }
 

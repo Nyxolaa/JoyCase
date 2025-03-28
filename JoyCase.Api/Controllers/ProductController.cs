@@ -5,6 +5,7 @@ using JoyCase.Application.Product.Command.UpdateProductCommand;
 using JoyCase.Application.Product.Query.GetProductByIdQuery;
 using JoyCase.Application.Product.Query.GetProductsByCategoryQuery;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 [Route("api/products")]
@@ -18,7 +19,7 @@ public class ProductController : ControllerBase
     }
 
     [HttpGet("get-products-by-category")]
-    //[Authorize(Roles = "1, 2")]
+    [Authorize(Roles = "1, 2")]
     public async Task<ActionResult> GetProductsByCategory([FromQuery]GetProductsByCategoryQuery request)
     {
         var response = await _mediator.Send(request);
@@ -27,7 +28,7 @@ public class ProductController : ControllerBase
 
     // id'ye gore urun getir
     [HttpGet("get-product-by-id")]
-    //[Permission("product_view")] // urun sayfasina yalnizca product_view yetkisi olanlar erisir
+    [Permission("product_view")] // urun sayfasina yalnizca product_view yetkisi olanlar erisir
     public async Task<IActionResult> GetProductById([FromQuery]GetProductByIdQuery request)
     {
         var product = await _mediator.Send(request);
@@ -37,6 +38,7 @@ public class ProductController : ControllerBase
 
     // yeni urun ekle
     [HttpPost("create-product")]
+    [Authorize(Roles = "1")]
     public async Task<IActionResult> CreateProduct([FromBody]CreateProductCommand command)
     {
         var productId = await _mediator.Send(command);
@@ -45,6 +47,7 @@ public class ProductController : ControllerBase
 
     // guncelle
     [HttpPut("update-product")]
+    [Authorize(Roles = "1")]
     public async Task<IActionResult> UpdateProduct([FromBody]UpdateProductCommand command)
     {
         var result = await _mediator.Send(command);
@@ -53,6 +56,7 @@ public class ProductController : ControllerBase
 
     // sil
     [HttpDelete("delete-product")]
+    [Authorize(Roles = "1")]
     public async Task<IActionResult> DeleteProduct([FromQuery]DeleteProductCommand request)
     {
         var result = await _mediator.Send(request);

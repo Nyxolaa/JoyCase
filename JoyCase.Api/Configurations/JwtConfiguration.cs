@@ -10,17 +10,8 @@ public static class JwtService
     {
         var jwtSettings = configuration.GetSection("JwtSettings");
 
-        // launchSettings den Secret Key al
-        var secretKey = Environment.GetEnvironmentVariable("JWT_SECRET");
+        var key = Encoding.UTF8.GetBytes(jwtSettings["SecretKey"]);
 
-        if (string.IsNullOrEmpty(secretKey))
-        {
-            throw new Exception("JWT Secret bulunamadı! Environment variable olarak ayarlayın.");
-        }
-
-        var key = Encoding.UTF8.GetBytes(secretKey);
-
-        // JWT Authentication
         services
             .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options =>

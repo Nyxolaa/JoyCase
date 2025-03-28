@@ -1,4 +1,5 @@
-﻿using JoyCase.Application.Category.Command.CreateCategoryCommand;
+﻿using JoyCase.Api.Infrastructure;
+using JoyCase.Application.Category.Command.CreateCategoryCommand;
 using JoyCase.Application.Category.Command.DeleteCategoryCommand;
 using JoyCase.Application.Category.Command.UpdateCategoryCommand;
 using JoyCase.Application.Category.Query.GetCategoryListQuery;
@@ -18,7 +19,7 @@ public class CategoryController : ControllerBase
     }
 
     [HttpGet("get-recursive-categories")]
-    //[Authorize(Roles = "1, 2")]
+    [Permission("product_view")] // urun sayfasina yalnizca product_view yetkisi olanlar erisir
     public async Task<ActionResult> GetCategories([FromQuery]GetRecursiveCategoriesQuery request)
     {
         var response = await _mediator.Send(request);
@@ -26,6 +27,7 @@ public class CategoryController : ControllerBase
     }
 
     [HttpPost("create-category")]
+    [Authorize(Roles = "1")]
     public async Task<IActionResult> CreateCategory([FromBody]CreateCategoryCommand command)
     {
         var result = await _mediator.Send(command);
@@ -33,6 +35,7 @@ public class CategoryController : ControllerBase
     }
 
     [HttpPut("update-category")]
+    [Authorize(Roles = "1")]
     public async Task<IActionResult> UpdateCategory([FromBody]UpdateCategoryCommand command)
     {
         var result = await _mediator.Send(command);
@@ -40,6 +43,7 @@ public class CategoryController : ControllerBase
     }
 
     [HttpDelete("delete-category")]
+    [Authorize(Roles = "1")]
     public async Task<IActionResult> DeleteCategory([FromQuery]DeleteCategoryCommand request)
     {
         var result = await _mediator.Send(request);
@@ -47,6 +51,7 @@ public class CategoryController : ControllerBase
     }
 
     [HttpGet("list-category")]
+    [Authorize(Roles = "1, 2")]
     public async Task<IActionResult> GetAllCategories([FromQuery]GetCategoryListQuery request)
     {
         var categories = await _mediator.Send(request);

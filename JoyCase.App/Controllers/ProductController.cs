@@ -19,7 +19,8 @@ namespace JoyCase.App.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var products = await _apiService.GetProductsByCategory();
+            var token = Request.Cookies["Token"];
+            var products = await _apiService.GetProductsByCategory(token);
             ViewBag.Products = products;
             return View();
         }

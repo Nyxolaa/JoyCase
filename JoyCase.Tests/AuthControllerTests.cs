@@ -42,7 +42,7 @@ namespace JoyCase.Tests
 
             // Mock JWT Settings
             var jwtSettings = new Mock<IConfigurationSection>();
-            jwtSettings.Setup(s => s["SecretKey"]).Returns("MySuperSecretKey1234567890MySuperSecretKey123456");
+            jwtSettings.Setup(s => s["SecretKey"]).Returns("ÇokGizliVeGüçlüBirŞifre123!");
             jwtSettings.Setup(s => s["Issuer"]).Returns("MyIssuer");
             jwtSettings.Setup(s => s["Audience"]).Returns("MyAudience");
             jwtSettings.Setup(s => s["ExpiryInMinutes"]).Returns("60");
