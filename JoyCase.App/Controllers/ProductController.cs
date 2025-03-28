@@ -46,10 +46,6 @@ namespace JoyCase.App.Controllers
             var token = Request.Cookies["Token"];
 
             var product = await _apiService.GetProductDetail(id,token);
-            //if (product == null)
-            //{
-            //    return NotFound(); // Ürün bulunamadýðýnda 404 döner
-            //}
             return View(product);
         }
         public async Task<IActionResult> Edit(long id)

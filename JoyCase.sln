@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JoyCase.Application", "JoyC
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JoyCase.Validation", "JoyCase.Validation\JoyCase.Validation.csproj", "{CEFB2C2A-94EB-429E-8414-978437568567}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JoyCase.Tests", "JoyCase.Tests\JoyCase.Tests.csproj", "{E640E05B-8605-47D3-8BB9-38F4E0B0701A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JoyCase.Tests", "JoyCase.Tests\JoyCase.Tests.csproj", "{E640E05B-8605-47D3-8BB9-38F4E0B0701A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
