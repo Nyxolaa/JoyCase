@@ -31,7 +31,7 @@ namespace JoyCase.Application.Product.Command.CreateProductCommand
                 Price = request.Price,
                 IsActive = true,
                 Description = request.Description,
-                CreatedBy = "",
+                CreatedBy = "anonymous",
                 CreatedAt = DateTime.UtcNow
             };
 
