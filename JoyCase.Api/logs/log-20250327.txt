@@ -1,0 +1,60 @@
+2025-03-27 01:33:42.019 +03:00 [INF] User profile is available. Using 'C:\Users\arti365\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2025-03-27 01:33:42.512 +03:00 [INF] Now listening on: https://localhost:7046
+2025-03-27 01:33:42.515 +03:00 [INF] Now listening on: http://localhost:5202
+2025-03-27 01:33:42.671 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-03-27 01:33:42.673 +03:00 [INF] Hosting environment: Development
+2025-03-27 01:33:42.674 +03:00 [INF] Content root path: C:\Fairu\othrs\myRepo\JoyCase\JoyCase.Api
+2025-03-27 01:33:44.228 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7046/swagger/index.html - null null
+2025-03-27 01:33:44.863 +03:00 [INF] HTTP GET /swagger/index.html responded 200 in 218.4952 ms
+2025-03-27 01:33:44.879 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7046/swagger/index.html - 200 null text/html;charset=utf-8 689.4099ms
+2025-03-27 01:33:45.709 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7046/_framework/aspnetcore-browser-refresh.js - null null
+2025-03-27 01:33:45.709 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7046/_vs/browserLink - null null
+2025-03-27 01:33:45.739 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7046/_framework/aspnetcore-browser-refresh.js - 200 13758 application/javascript; charset=utf-8 31.0491ms
+2025-03-27 01:33:45.935 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7046/_vs/browserLink - 200 null text/javascript; charset=UTF-8 226.3826ms
+2025-03-27 01:33:47.408 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7046/swagger/v1/swagger.json - null null
+2025-03-27 01:33:47.761 +03:00 [INF] HTTP GET /swagger/v1/swagger.json responded 200 in 345.7225 ms
+2025-03-27 01:33:47.765 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7046/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 357.2126ms
+2025-03-27 01:34:22.202 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7046/api/Auth/login - application/json 50
+2025-03-27 01:34:22.535 +03:00 [INF] Executing endpoint 'AuthController.Login (JoyCase.Api)'
+2025-03-27 01:34:22.602 +03:00 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(JoyCase.Application.User.Query.LoginUserQuery.LoginUserQuery) on controller AuthController (JoyCase.Api).
+2025-03-27 01:34:24.927 +03:00 [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2025-03-27 01:34:25.246 +03:00 [INF] Executed DbCommand (110ms) [Parameters=[@__request_Username_0='?' (Size = 50)], CommandType='"Text"', CommandTimeout='30']
+SELECT [u2].[Id], [u2].[Username], [u2].[Firstname], [u2].[Lastname], [s0].[Id], [s0].[UserId], [s0].[RoleId], [s0].[Id0], [s0].[Name], [s0].[RoleId0], [s0].[PermissionId], [s1].[Id], [s1].[Name], [s1].[UserId], [s1].[PermissionId]
+FROM (
+    SELECT TOP(2) [u].[Id], [u].[Username], [u].[Firstname], [u].[Lastname]
+    FROM [Users] AS [u]
+    WHERE [u].[Username] = @__request_Username_0
+) AS [u2]
+LEFT JOIN (
+    SELECT [r].[Id], [u0].[UserId], [u0].[RoleId], [s].[Id] AS [Id0], [s].[Name], [s].[RoleId] AS [RoleId0], [s].[PermissionId]
+    FROM [UserRoles] AS [u0]
+    INNER JOIN [Roles] AS [r] ON [u0].[RoleId] = [r].[Id]
+    LEFT JOIN (
+        SELECT [p].[Id], [p].[Name], [r0].[RoleId], [r0].[PermissionId]
+        FROM [RolePermissions] AS [r0]
+        INNER JOIN [Permissions] AS [p] ON [r0].[PermissionId] = [p].[Id]
+    ) AS [s] ON [r].[Id] = [s].[RoleId]
+) AS [s0] ON [u2].[Id] = [s0].[UserId]
+LEFT JOIN (
+    SELECT [p0].[Id], [p0].[Name], [u1].[UserId], [u1].[PermissionId]
+    FROM [UserPermissions] AS [u1]
+    INNER JOIN [Permissions] AS [p0] ON [u1].[PermissionId] = [p0].[Id]
+) AS [s1] ON [u2].[Id] = [s1].[UserId]
+ORDER BY [u2].[Id], [s0].[UserId], [s0].[RoleId], [s0].[Id], [s0].[RoleId0], [s0].[PermissionId], [s0].[Id0], [s1].[UserId], [s1].[PermissionId]
+2025-03-27 01:34:25.426 +03:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType0`2[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2025-03-27 01:34:25.442 +03:00 [INF] Executed action AuthController.Login (JoyCase.Api) in 2832.2026ms
+2025-03-27 01:34:25.444 +03:00 [INF] Executed endpoint 'AuthController.Login (JoyCase.Api)'
+2025-03-27 01:34:25.450 +03:00 [INF] HTTP POST /api/Auth/login responded 200 in 3222.4487 ms
+2025-03-27 01:34:25.471 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7046/api/Auth/login - 200 null application/json; charset=utf-8 3268.6641ms
+2025-03-27 01:34:47.281 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7046/api/Auth/log-test - null null
+2025-03-27 01:34:47.454 +03:00 [INF] Executing endpoint 'AuthController.LogTest (JoyCase.Api)'
+2025-03-27 01:34:47.460 +03:00 [INF] Route matched with {action = "LogTest", controller = "Auth"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult LogTest() on controller AuthController (JoyCase.Api).
+2025-03-27 01:34:52.109 +03:00 [INF] Bu bir bilgi mesajıdır.
+2025-03-27 01:34:52.655 +03:00 [WRN] Bu bir uyarı mesajıdır.
+2025-03-27 01:34:53.862 +03:00 [ERR] Bu bir hata mesajıdır.
+System.Exception: Örnek hata
+2025-03-27 01:34:59.930 +03:00 [INF] Executing OkObjectResult, writing value of type 'System.String'.
+2025-03-27 01:34:59.934 +03:00 [INF] Executed action AuthController.LogTest (JoyCase.Api) in 12470.9776ms
+2025-03-27 01:34:59.938 +03:00 [INF] Executed endpoint 'AuthController.LogTest (JoyCase.Api)'
+2025-03-27 01:34:59.940 +03:00 [INF] HTTP GET /api/Auth/log-test responded 200 in 12642.6061 ms
+2025-03-27 01:34:59.945 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7046/api/Auth/log-test - 200 null text/plain; charset=utf-8 12664.0733ms
