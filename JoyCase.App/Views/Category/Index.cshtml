@@ -10,7 +10,7 @@
         <a class="btn btn-success" asp-controller="Category" asp-action="Create">Yeni Kategori Oluştur</a>
     </div> *@
     <ul class="list-group">
-        @foreach (var category in (IEnumerable<GetCategoryResponseModel>)ViewBag.Categories)
+        @foreach (var category in ((ViewBag.Categories as List<GetCategoryResponseModel>)))
         {
             <li class="list-group-item">
                 @category.FullPath

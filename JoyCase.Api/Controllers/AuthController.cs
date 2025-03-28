@@ -58,8 +58,8 @@ public class AuthController : ControllerBase
                 Subject = new ClaimsIdentity(claims),
                 Expires = DateTime.UtcNow.AddHours(1),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(secretKey), SecurityAlgorithms.HmacSha256Signature),
-                Issuer = jwtSettings["Issuer"], // Bu değer, doğrulamada kullanılan issuer ile aynı olmalı
-                Audience = jwtSettings["Audience"] // Bu değer, doğrulamada kullanılan audience ile aynı olmalı
+                Issuer = jwtSettings["Issuer"], 
+                Audience = jwtSettings["Audience"]
             };
 
             var token = tokenHandler.CreateToken(tokenDescriptor);
@@ -82,12 +82,12 @@ public class AuthController : ControllerBase
             return Ok(new
             {
                 token = jwtToken,
-                expiresIn = jwtSettings["ExpiryInMinutes"]
+                expiresIn = int.TryParse(jwtSettings["ExpiryInMinutes"], out var expiry) ? expiry : 60
             });
         }
         else
         {
-            return NotFound(response.Errors);
+            return NotFound(response.Errors ?? new string[] { "Bilinmeyen hata oluştu" });
         }
     }
 
